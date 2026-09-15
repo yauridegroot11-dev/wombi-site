@@ -111,7 +111,7 @@
   .hero, .principle, .made, .wait-card, .marquee, .section > .shell > .eyebrow {
     text-shadow: 0 1px 2px rgba(20,17,12,0.9), 0 2px 28px rgba(20,17,12,0.85);
   }
-  .cream-block, .cream-block * { text-shadow: none; }
+  .cream-block, .cream-block *, .cream-block.section > .shell > .eyebrow { text-shadow: none; }
 
   .eyebrow {
     font-family: var(--body);
@@ -330,8 +330,8 @@
   }
   .big-num {
     font-family: var(--display); font-weight: 500;
-    font-size: clamp(5.5rem, 14vw, 11rem);
-    line-height: 0.9; letter-spacing: -0.05em;
+    font-size: clamp(4.2rem, 9.6vw, 7.6rem);
+    line-height: 0.9; letter-spacing: -0.05em; white-space: nowrap;
     color: var(--gold-3);
     font-variant-numeric: tabular-nums;
   }
@@ -501,10 +501,10 @@
     <div class="shell">
       <p class="eyebrow reveal">Why we are making it</p>
       <div class="stat-grid">
-        <div class="big-num reveal" style="--i:1"><span data-count="47">0</span>%</div>
+        <div class="big-num reveal" style="--i:1">1 in 5</div>
         <div class="reveal" style="--i:2">
-          <p class="stat-copy">of Americans regret not recording a conversation with someone close to them who has died. Only 33% have ever done it.</p>
-          <p class="stat-src">YouGov, 6,090 US adults</p>
+          <p class="stat-copy">of the best ideas professional writers and physicists had each day arrived while their minds were wandering, not while they were working. Those were also the ideas most likely to feel like an aha moment.</p>
+          <p class="stat-src">Gable, Hopper &amp; Schooler, <i>Psychological Science</i>, 2019. 185 professional writers and physicists.</p>
         </div>
       </div>
     </div>
