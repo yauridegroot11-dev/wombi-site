@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wombi — Feedback</title>
+<meta name="description" content="Tell us what landed and what did not. Pitch and product feedback for Wombi.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://wombi.store/feedback">
+<link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#14110C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=Inter:wght@400;500&display=swap">
+<style>
+  :root {
+    --ink:        #14110C;
+    --ink-2:      #1E1A13;
+    --ink-3:      #2A241B;
+    --cream:      #F5F0E3;
+    --cream-2:    #EBE2CE;
+    --gold-1:     #FACE5C;
+    --gold-2:     #E0A230;
+    --gold-3:     #C17301;
+    --gold-4:     #9A5A00;
+    --taupe:      #A3988A;
+    --taupe-deep: #6B6154;
+    --sand-line:  #D6CCB6;
+    --display: "Poppins", "Helvetica Neue", Arial, sans-serif;
+    --body:    "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --shell: 760px;
+    --gutter: clamp(20px, 4vw, 48px);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; color-scheme: dark; }
+  body {
+    margin: 0; background: var(--ink); color: var(--cream);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(90% 60% at 80% -10%, rgba(224,162,48,0.14) 0%, transparent 60%);
+  }
+  ::selection { background: var(--gold-2); color: var(--ink); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; line-height: 1.05; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold-2); outline-offset: 4px; border-radius: 2px; }
+  .shell { width: 100%; max-width: var(--shell); margin-inline: auto; padding-inline: var(--gutter); }
+
+  /* nav (same as home) */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(20,17,12,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(245,240,227,0.08); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 16px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand img { width: 30px; height: auto; display: block; }
+  .wordmark { font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); line-height: 1; transform: translateY(1px); }
+  .nav-link { position: relative; font-size: 14px; font-weight: 500; color: var(--cream); text-decoration: none; padding-bottom: 3px; }
+  .nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold-2); transform: scaleX(0); transform-origin: left center; transition: transform 380ms var(--ease-out); }
+  .nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); }
+  .progress { height: 2px; background: rgba(245,240,227,0.08); }
+  .progress > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-2), var(--gold-1)); transition: width 320ms var(--ease-out); }
+
+  /* intro */
+  .intro { padding-block: clamp(56px, 10vw, 104px) 40px; }
+  .intro h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); }
+  .intro .lede { margin-top: 20px; max-width: 46ch; font-size: 1.05rem; line-height: 1.7; color: rgba(245,240,227,0.74); }
+  .intro .meta { margin-top: 18px; font-size: 13.5px; color: var(--taupe); }
+  .intro .meta b { color: var(--gold-1); font-weight: 500; }
+
+  /* sections */
+  .sec { padding-block: 40px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .sec h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .sec .hint { margin-top: 8px; font-size: 15px; color: var(--taupe); max-width: 52ch; }
+  .q { margin-top: 34px; }
+  .q > label.qt, .q > .qt { display: block; font-size: 17px; font-weight: 500; color: var(--cream); line-height: 1.45; }
+  .q .sub { margin-top: 4px; font-size: 14px; color: var(--taupe); }
+  .q .req { color: var(--gold-2); }
+
+  /* controls */
+  .field {
+    width: 100%; font: inherit; font-size: 16px; color: var(--cream);
+    background: rgba(245,240,227,0.06); border: 1px solid rgba(245,240,227,0.16);
+    border-radius: 6px; padding: 13px 15px; margin-top: 12px;
+    transition: border-color 220ms ease, box-shadow 320ms var(--ease-out), background-color 220ms ease;
+  }
+  textarea.field { min-height: 96px; resize: vertical; line-height: 1.5; }
+  .field::placeholder { color: rgba(245,240,227,0.34); }
+  .field:focus { outline: none; border-color: var(--gold-2); background: rgba(245,240,227,0.08); box-shadow: 0 0 0 4px rgba(224,162,48,0.18); }
+
+  .scale { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .scale label { position: relative; flex: 1 1 0; min-width: 44px; }
+  .scale input { position: absolute; opacity: 0; inset: 0; }
+  .scale span {
+    display: block; text-align: center; padding: 12px 0; border-radius: 6px;
+    font-family: var(--display); font-weight: 500; font-size: 16px;
+    background: rgba(245,240,227,0.06); border: 1px solid rgba(245,240,227,0.14); color: var(--cream);
+    cursor: pointer; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  }
+  .scale label:hover span { border-color: rgba(250,206,92,0.5); }
+  .scale input:checked + span { background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); color: var(--ink); border-color: transparent; }
+  .scale input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 3px; }
+  .ends { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12.5px; color: var(--taupe); }
+
+  .opts { display: grid; gap: 8px; margin-top: 12px; }
+  .opts label { position: relative; display: block; }
+  .opts input { position: absolute; opacity: 0; inset: 0; }
+  .opts span {
+    display: block; padding: 12px 16px 12px 44px; border-radius: 6px; font-size: 15.5px;
+    background: rgba(245,240,227,0.05); border: 1px solid rgba(245,240,227,0.13); cursor: pointer;
+    transition: background-color 180ms ease, border-color 180ms ease;
+  }
+  .opts span::before {
+    content: ""; position: absolute; left: 16px; top: 50%; width: 16px; height: 16px; margin-top: -8px;
+    border-radius: 50%; border: 1.5px solid rgba(245,240,227,0.4); transition: all 180ms ease;
+  }
+  .opts input[type=checkbox] + span::before { border-radius: 4px; }
+  .opts label:hover span { border-color: rgba(250,206,92,0.45); }
+  .opts input:checked + span { background: rgba(224,162,48,0.14); border-color: var(--gold-2); }
+  .opts input:checked + span::before { background: var(--gold-1); border-color: var(--gold-1); box-shadow: inset 0 0 0 3px var(--ink); }
+  .opts input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 3px; }
+
+  .grid { margin-top: 12px; display: grid; grid-template-columns: 1fr repeat(3, minmax(64px, 96px)); gap: 6px 4px; align-items: center; font-size: 14px; }
+  .grid .h { font-size: 12px; color: var(--taupe); text-align: center; line-height: 1.2; }
+  .grid .r { color: rgba(245,240,227,0.88); padding-block: 6px; }
+  .grid label { position: relative; display: block; height: 100%; }
+  .grid input { position: absolute; opacity: 0; inset: 0; }
+  .grid span { display: block; height: 38px; border-radius: 6px; background: rgba(245,240,227,0.05); border: 1px solid rgba(245,240,227,0.13); cursor: pointer; }
+  .grid input:checked + span { background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); border-color: transparent; }
+  .grid input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 2px; }
+
+  .btn {
+    font-family: var(--display); font-weight: 600; font-size: 15px; letter-spacing: 0.01em; color: var(--ink);
+    background: linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 100%); border: 0; border-radius: 6px;
+    padding: 15px 26px; cursor: pointer; white-space: nowrap;
+    transition: transform 220ms var(--ease-out), box-shadow 220ms ease, filter 220ms ease;
+    box-shadow: 0 10px 30px -14px rgba(224,162,48,0.55);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(224,162,48,0.7); filter: brightness(1.04); }
+  .btn:disabled { cursor: progress; opacity: 0.7; transform: none; }
+  .submit { padding-block: 40px 80px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .submit .micro { margin-top: 14px; font-size: 13.5px; color: var(--taupe); max-width: 48ch; }
+  .form-msg { margin-top: 14px; font-size: 14.5px; }
+  .form-msg.err { color: #E9A98C; }
+  .done { padding-block: 80px 120px; }
+  .done h2 { font-size: clamp(2rem, 5vw, 3rem); }
+  .done h2 b { color: var(--gold-1); font-weight: 500; }
+  .done p { margin-top: 18px; color: rgba(245,240,227,0.74); max-width: 46ch; }
+  .hidden { display: none !important; }
+  .missing { box-shadow: 0 0 0 2px #E9A98C; border-radius: 8px; }
+
+  footer { padding-block: 40px 56px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .foot { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; font-size: 13.5px; color: var(--taupe); }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--gold-1); }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr repeat(3, 56px); }
+    .scale span { font-size: 15px; padding: 11px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="shell nav-inner">
+    <a href="/" class="brand" aria-label="Wombi, home">
+      <img src="/icon-192.png?v=2" alt="" width="30" height="30">
+      <span class="wordmark">Wombi</span>
+    </a>
+    <a href="/" class="nav-link">Back to wombi.store</a>
+  </div>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+</header>
+
+<main>
+  <section class="intro shell">
+    <h1 id="title">You just heard the pitch.<br>Now be honest.</h1>
+    <p class="lede" id="lede">Every answer helps me make Wombi and the pitch sharper. There are no wrong answers and the blunt ones are the useful ones.</p>
+    <p class="meta" id="meta">Takes about <b>8 minutes</b>. Nothing here is public.</p>
+  </section>
+
+  <form id="fb" novalidate>
+
+    <section class="sec shell" data-tier="all">
+      <h2>First, who are you?</h2>
+      <div class="q">
+        <label class="qt" for="name">Your name <span class="sub" style="display:inline">(optional, but it helps me follow up)</span></label>
+        <input class="field" id="name" name="respondent_name" type="text" autocomplete="name" placeholder="First name is fine">
+      </div>
+      <div class="q" data-q="respondent_role">
+        <p class="qt">How did you hear the pitch? <span class="req">*</span></p>
+        <div class="opts" id="roleOpts">
+          <label><input type="radio" name="respondent_role" value="Core team"><span>I am on the core team</span></label>
+          <label><input type="radio" name="respondent_role" value="Judge / mentor"><span>As a judge or mentor</span></label>
+          <label><input type="radio" name="respondent_role" value="Audience"><span>In the audience</span></label>
+          <label><input type="radio" name="respondent_role" value="Other"><span>Other</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. Problem -->
+    <section class="sec shell" data-tier="all">
+      <h2>The problem</h2>
+      <p class="hint">Before we talk about the product: did the problem itself land?</p>
+
+      <div class="q" data-q="problem_clarity">
+        <p class="qt">How clear is the problem statement? <span class="req">*</span></p>
+        <div class="scale" role="radiogroup" aria-label="Problem clarity, 1 to 5">
+          <label><input type="radio" name="problem_clarity" value="1"><span>1</span></label>
+          <label><input type="radio" name="problem_clarity" value="2"><span>2</span></label>
+          <label><input type="radio" name="problem_clarity" value="3"><span>3</span></label>
+          <label><input type="radio" name="problem_clarity" value="4"><span>4</span></label>
+          <label><input type="radio" name="problem_clarity" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>Lost me</span><span>Crystal clear</span></div>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="problem_in_own_words">In one sentence, what problem is Wombi solving?</label>
+        <p class="sub">Your words, not mine. This is the real test of whether the problem statement works.</p>
+        <input class="field" id="problem_in_own_words" name="problem_in_own_words" type="text" maxlength="300" placeholder="Wombi solves…">
+      </div>
+
+      <div class="q" data-q="problem_urgency">
+        <p class="qt">Did the problem feel real and urgent, or nice to have?</p>
+        <div class="opts">
+          <label><input type="radio" name="problem_urgency" value="Felt it in my gut"><span>Felt it in my gut</span></label>
+          <label><input type="radio" name="problem_urgency" value="Intellectually agreed"><span>Intellectually agreed, did not feel it</span></label>
+          <label><input type="radio" name="problem_urgency" value="Nice to have"><span>Nice to have</span></label>
+          <label><input type="radio" name="problem_urgency" value="Not sure it is a problem"><span>Not sure it is a problem</span></label>
+        </div>
+      </div>
+
+      <div class="q" data-tier="core" data-q="problem_personal">
+        <p class="qt">Do you recognise this problem in your own life?</p>
+        <div class="opts">
+          <label><input type="radio" name="problem_personal" value="Yes, often"><span>Yes, often</span></label>
+          <label><input type="radio" name="problem_personal" value="Sometimes"><span>Sometimes</span></label>
+          <label><input type="radio" name="problem_personal" value="Rarely"><span>Rarely</span></label>
+          <label><input type="radio" name="problem_personal" value="Never"><span>Never</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Solution & product -->
+    <section class="sec shell" data-tier="all">
+      <h2>The solution and the product</h2>
+
+      <div class="q" data-q="solution_clarity">
+        <p class="qt">How clear is the solution? <span class="req">*</span></p>
+        <div class="scale" role="radiogroup" aria-label="Solution clarity, 1 to 5">
+          <label><input type="radio" name="solution_clarity" value="1"><span>1</span></label>
+          <label><input type="radio" name="solution_clarity" value="2"><span>2</span></label>
+          <label><input type="radio" name="solution_clarity" value="3"><span>3</span></label>
+          <label><input type="radio" name="solution_clarity" value="4"><span>4</span></label>
+          <label><input type="radio" name="solution_clarity" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>Unclear</span><span>Obvious</span></div>
+      </div>
+
+      <div class="q" data-q="product_clarity">
+        <p class="qt">How clear is the product description? <span class="req">*</span></p>
+        <div class="scale" role="radiogroup" aria-label="Product description clarity, 1 to 5">
+          <label><input type="radio" name="product_clarity" value="1"><span>1</span></label>
+          <label><input type="radio" name="product_clarity" value="2"><span>2</span></label>
+          <label><input type="radio" name="product_clarity" value="3"><span>3</span></label>
+          <label><input type="radio" name="product_clarity" value="4"><span>4</span></label>
+          <label><input type="radio" name="product_clarity" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>Could not picture it</span><span>I could draw it</span></div>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="product_in_own_words">Describe the product back to me in one sentence, as you would explain it to a friend.</label>
+        <input class="field" id="product_in_own_words" name="product_in_own_words" type="text" maxlength="300" placeholder="It is a…">
+      </div>
+
+      <div class="q">
+        <label class="qt" for="product_improve">How can I improve the product description?</label>
+        <textarea class="field" id="product_improve" name="product_improve" maxlength="2000" placeholder="What was fuzzy, what was missing, what you would say instead"></textarea>
+      </div>
+
+      <div class="q" data-tier="core">
+        <p class="qt">Was the "why this, why now, why me" obvious?</p>
+        <div class="grid" role="group" aria-label="Why this, why now, why me">
+          <span></span><span class="h">Clear</span><span class="h">Somewhat</span><span class="h">Missing</span>
+          <span class="r">Why this product</span>
+          <label><input type="radio" name="why_this" value="Clear"><span></span></label>
+          <label><input type="radio" name="why_this" value="Somewhat"><span></span></label>
+          <label><input type="radio" name="why_this" value="Missing"><span></span></label>
+          <span class="r">Why now</span>
+          <label><input type="radio" name="why_now" value="Clear"><span></span></label>
+          <label><input type="radio" name="why_now" value="Somewhat"><span></span></label>
+          <label><input type="radio" name="why_now" value="Missing"><span></span></label>
+          <span class="r">Why Yauri</span>
+          <label><input type="radio" name="why_me" value="Clear"><span></span></label>
+          <label><input type="radio" name="why_me" value="Somewhat"><span></span></label>
+          <label><input type="radio" name="why_me" value="Missing"><span></span></label>
+        </div>
+      </div>
+
+      <div class="q" data-tier="core">
+        <label class="qt" for="cut_add">What is the one thing you would cut from the product description, and the one thing you would add?</label>
+        <textarea class="field" id="cut_add" name="cut_add" maxlength="2000" placeholder="Cut: … / Add: …"></textarea>
+      </div>
+    </section>
+
+    <!-- 3. Storytelling -->
+    <section class="sec shell" data-tier="all">
+      <h2>The storytelling</h2>
+      <p class="hint">This is where I want the most detail. Be specific.</p>
+
+      <div class="q" data-q="heartstrings">
+        <p class="qt">Did I pull your heartstrings when I was describing the problem and the solution? <span class="req">*</span></p>
+        <div class="opts">
+          <label><input type="radio" name="heartstrings" value="Yes, strongly"><span>Yes, strongly</span></label>
+          <label><input type="radio" name="heartstrings" value="A little"><span>A little</span></label>
+          <label><input type="radio" name="heartstrings" value="Not really"><span>Not really</span></label>
+          <label><input type="radio" name="heartstrings" value="No"><span>No</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="storytelling">What about my storytelling?</label>
+        <textarea class="field" id="storytelling" name="storytelling" maxlength="3000" placeholder="Anything: the arc, the opening, the pacing, the ending"></textarea>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="storytelling_improve">Where are my improvement points in the storytelling?</label>
+        <textarea class="field" id="storytelling_improve" name="storytelling_improve" maxlength="3000" placeholder="Be blunt. Which parts dragged, which felt rehearsed, which needed a person in them"></textarea>
+      </div>
+
+      <div class="q" data-tier="core">
+        <label class="qt" for="moment_landed">Which moment landed hardest, if any?</label>
+        <input class="field" id="moment_landed" name="moment_landed" type="text" maxlength="300" placeholder="The moment when…">
+      </div>
+
+      <div class="q" data-tier="core">
+        <label class="qt" for="attention_drop">Where did your attention drop?</label>
+        <p class="sub">A rough moment or the topic being covered at the time.</p>
+        <input class="field" id="attention_drop" name="attention_drop" type="text" maxlength="300" placeholder="Around the part about…">
+      </div>
+
+      <div class="q" data-tier="core" data-q="narrative_arc">
+        <p class="qt">Was there a clear narrative arc, or did it feel like a feature list?</p>
+        <div class="opts">
+          <label><input type="radio" name="narrative_arc" value="Clear story"><span>Clear story: a person, a struggle, a turning point</span></label>
+          <label><input type="radio" name="narrative_arc" value="Half story, half feature list"><span>Half story, half feature list</span></label>
+          <label><input type="radio" name="narrative_arc" value="Mostly feature list"><span>Mostly a feature list</span></label>
+        </div>
+      </div>
+
+      <div class="q" data-tier="core" data-q="hook">
+        <p class="qt">Did the opening hook you in the first 15 seconds?</p>
+        <div class="scale" role="radiogroup" aria-label="Opening hook, 1 to 5">
+          <label><input type="radio" name="hook" value="1"><span>1</span></label>
+          <label><input type="radio" name="hook" value="2"><span>2</span></label>
+          <label><input type="radio" name="hook" value="3"><span>3</span></label>
+          <label><input type="radio" name="hook" value="4"><span>4</span></label>
+          <label><input type="radio" name="hook" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>Slow start</span><span>Hooked</span></div>
+      </div>
+
+      <div class="q" data-tier="core">
+        <p class="qt">The delivery</p>
+        <div class="grid" role="group" aria-label="Delivery">
+          <span></span><span class="h">Too little</span><span class="h">Just right</span><span class="h">Too much</span>
+          <span class="r">Pace</span>
+          <label><input type="radio" name="delivery_pace" value="Too little"><span></span></label>
+          <label><input type="radio" name="delivery_pace" value="Just right"><span></span></label>
+          <label><input type="radio" name="delivery_pace" value="Too much"><span></span></label>
+          <span class="r">Energy</span>
+          <label><input type="radio" name="delivery_energy" value="Too little"><span></span></label>
+          <label><input type="radio" name="delivery_energy" value="Just right"><span></span></label>
+          <label><input type="radio" name="delivery_energy" value="Too much"><span></span></label>
+          <span class="r">Eye contact and presence</span>
+          <label><input type="radio" name="delivery_presence" value="Too little"><span></span></label>
+          <label><input type="radio" name="delivery_presence" value="Just right"><span></span></label>
+          <label><input type="radio" name="delivery_presence" value="Too much"><span></span></label>
+          <span class="r">Confidence on the numbers</span>
+          <label><input type="radio" name="delivery_numbers" value="Too little"><span></span></label>
+          <label><input type="radio" name="delivery_numbers" value="Just right"><span></span></label>
+          <label><input type="radio" name="delivery_numbers" value="Too much"><span></span></label>
+          <span class="r">Text on the slides</span>
+          <label><input type="radio" name="delivery_slides" value="Too little"><span></span></label>
+          <label><input type="radio" name="delivery_slides" value="Just right"><span></span></label>
+          <label><input type="radio" name="delivery_slides" value="Too much"><span></span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. You are the user -->
+    <section class="sec shell" data-tier="all">
+      <h2>You are the user</h2>
+      <p class="hint">Forget the pitch for a second. You are the person this is for.</p>
+
+      <div class="q" data-q="would_purchase">
+        <p class="qt">Would you purchase this? <span class="req">*</span></p>
+        <div class="opts">
+          <label><input type="radio" name="would_purchase" value="Yes, take my money"><span>Yes, take my money</span></label>
+          <label><input type="radio" name="would_purchase" value="Probably, if the price is right"><span>Probably, if the price is right</span></label>
+          <label><input type="radio" name="would_purchase" value="As a gift for someone else"><span>Only as a gift for someone else</span></label>
+          <label><input type="radio" name="would_purchase" value="No"><span>No</span></label>
+        </div>
+      </div>
+
+      <div class="q" data-q="price_range">
+        <p class="qt">What is the most you would pay for the device?</p>
+        <div class="opts">
+          <label><input type="radio" name="price_range" value="Under $50"><span>Under $50</span></label>
+          <label><input type="radio" name="price_range" value="$50–99"><span>$50 to $99</span></label>
+          <label><input type="radio" name="price_range" value="$100–149"><span>$100 to $149</span></label>
+          <label><input type="radio" name="price_range" value="$150–199"><span>$150 to $199</span></label>
+          <label><input type="radio" name="price_range" value="$200+"><span>$200 or more</span></label>
+        </div>
+      </div>
+
+      <div class="q" data-tier="core" data-q="pricing_model">
+        <p class="qt">Which pricing model feels right?</p>
+        <div class="opts">
+          <label><input type="radio" name="pricing_model" value="One-time purchase"><span>One-time purchase, nothing else</span></label>
+          <label><input type="radio" name="pricing_model" value="Device + optional subscription"><span>Device plus an optional subscription</span></label>
+          <label><input type="radio" name="pricing_model" value="Device + required subscription"><span>Device plus a required subscription</span></label>
+          <label><input type="radio" name="pricing_model" value="Cheap device, paid app"><span>Cheap device, paid app</span></label>
+          <label><input type="radio" name="pricing_model" value="Other"><span>Something else (say below)</span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="pricing_tips">What about pricing? Any tips, suggestions, pricing model?</label>
+        <textarea class="field" id="pricing_tips" name="pricing_tips" maxlength="2000" placeholder="Whatever comes to mind"></textarea>
+      </div>
+
+      <div class="q" data-tier="core">
+        <label class="qt" for="purchase_blocker">What would stop you from buying? The real reason, not the polite one.</label>
+        <textarea class="field" id="purchase_blocker" name="purchase_blocker" maxlength="2000" placeholder="Honestly…"></textarea>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="perfect_for">Who in your life would this be perfect for?</label>
+        <input class="field" id="perfect_for" name="perfect_for" type="text" maxlength="300" placeholder="My…">
+      </div>
+    </section>
+
+    <!-- 5. Expert view -->
+    <section class="sec shell" data-tier="all">
+      <h2>Put your judge hat on</h2>
+
+      <div class="q" data-q="judge_score">
+        <p class="qt">If you were a judge at a pitch competition, what score would you give this pitch today?</p>
+        <div class="scale" role="radiogroup" aria-label="Judge score, 1 to 10">
+          <label><input type="radio" name="judge_score" value="1"><span>1</span></label>
+          <label><input type="radio" name="judge_score" value="2"><span>2</span></label>
+          <label><input type="radio" name="judge_score" value="3"><span>3</span></label>
+          <label><input type="radio" name="judge_score" value="4"><span>4</span></label>
+          <label><input type="radio" name="judge_score" value="5"><span>5</span></label>
+          <label><input type="radio" name="judge_score" value="6"><span>6</span></label>
+          <label><input type="radio" name="judge_score" value="7"><span>7</span></label>
+          <label><input type="radio" name="judge_score" value="8"><span>8</span></label>
+          <label><input type="radio" name="judge_score" value="9"><span>9</span></label>
+          <label><input type="radio" name="judge_score" value="10"><span>10</span></label>
+        </div>
+        <div class="ends"><span>Not there yet</span><span>Fund it</span></div>
+      </div>
+
+      <div class="q" data-tier="core">
+        <label class="qt" for="hardest_question">What is the single hardest question a judge will ask that I do not have a good answer for yet?</label>
+        <textarea class="field" id="hardest_question" name="hardest_question" maxlength="2000" placeholder="They will ask…"></textarea>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="funny_tips">Any funny tips or suggestions that I can add to the presentation?</label>
+        <textarea class="field" id="funny_tips" name="funny_tips" maxlength="2000" placeholder="A prop, a line, a demo moment, a joke that fits"></textarea>
+      </div>
+
+      <div class="q" data-tier="core">
+        <label class="qt" for="competitors">Competitors I am underestimating, a slide to kill, a stat to add?</label>
+        <textarea class="field" id="competitors" name="competitors" maxlength="2000" placeholder="Optional"></textarea>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="journey_tips">Any tips as I embark on this journey?</label>
+        <textarea class="field" id="journey_tips" name="journey_tips" maxlength="3000" placeholder="What you wish someone had told you"></textarea>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="contact_help">Do you have a contact that could help me?</label>
+        <p class="sub">Anyone in hardware, manufacturing, retail, investing, or who has simply done this before.</p>
+        <textarea class="field" id="contact_help" name="contact_help" maxlength="2000" placeholder="Name and how they could help. I will ask you before reaching out."></textarea>
+      </div>
+
+      <div class="q" data-q="preorder">
+        <p class="qt">Do you want to put in a pre-order for when the first batch is ready?</p>
+        <div class="opts">
+          <label><input type="radio" name="preorder" value="Yes, one for me"><span>Yes, one for me</span></label>
+          <label><input type="radio" name="preorder" value="Yes, more than one"><span>Yes, more than one</span></label>
+          <label><input type="radio" name="preorder" value="Ask me again when it exists"><span>Ask me again when it exists</span></label>
+          <label><input type="radio" name="preorder" value="No"><span>No</span></label>
+        </div>
+      </div>
+
+      <div class="q hidden" id="emailQ">
+        <label class="qt" for="email">Where should I write when the first batch is ready?</label>
+        <input class="field" id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+      </div>
+
+      <div class="q">
+        <label class="qt" for="anything_else">Anything else that you would like to share?</label>
+        <textarea class="field" id="anything_else" name="anything_else" maxlength="3000" placeholder="Open floor"></textarea>
+      </div>
+    </section>
+
+    <section class="submit shell">
+      <button class="btn" type="submit" id="send">Send feedback</button>
+      <p class="micro">Your answers go straight to me and nobody else. Required questions are marked with a gold star.</p>
+      <p class="form-msg" id="msg" aria-live="polite"></p>
+    </section>
+  </form>
+
+  <section class="done shell hidden" id="thanks">
+    <h2>Thank you. <b>That was useful.</b></h2>
+    <p id="thanksText">I will read every word. If you said something blunt, good, that is the part I will act on first.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="shell foot">
+    <a href="/">wombi.store</a>
+    <span>© 2026 Wombi. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  /* ------------------------------------------------------------
+     Survey routing.
+       /feedback                       → short set, survey slug "general"
+       /feedback?s=competition-2026-10 → short set, tagged with that slug
+       /feedback?s=core-team-2026-09&full=1 → every question (core-team depth)
+     Questions marked data-tier="core" only show when full=1.
+  ------------------------------------------------------------ */
+  const params = new URLSearchParams(location.search);
+  const survey = (params.get('s') || 'general').replace(/[^a-z0-9-_]/gi, '').slice(0, 60) || 'general';
+  const full = params.get('full') === '1' || /^core/i.test(survey);
+
+  if (!full) {
+    document.querySelectorAll('[data-tier="core"]').forEach(el => el.remove());
+    document.getElementById('meta').innerHTML = 'Takes about <b>5 minutes</b>. Nothing here is public.';
+  } else {
+    document.getElementById('meta').innerHTML = 'Takes <b>8 to 10 minutes</b>. You have the time, and I owe you a beer.';
+  }
+  if (/^core/i.test(survey)) {
+    const r = document.querySelector('input[name="respondent_role"][value="Core team"]');
+    if (r) r.checked = true;
+  }
+
+  const SUPABASE_URL = 'https://ypqlttdxiehgpaxtkaep.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_ToxoRDgK9t5Ks9RVzP8KYg_PjUOMYD8';
+  const PREVIEW = /claude\.ai$|claudeusercontent|localhost|^file:/.test(location.hostname + location.protocol);
+
+  const form = document.getElementById('fb');
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('send');
+  const bar = document.getElementById('bar');
+  const REQUIRED = ['respondent_role', 'problem_clarity', 'solution_clarity', 'product_clarity', 'heartstrings', 'would_purchase'];
+  const NUMERIC = ['problem_clarity', 'solution_clarity', 'product_clarity', 'hook', 'judge_score'];
+  const DRAFT_KEY = 'wombi-feedback-' + survey;
+
+  /* progress + draft */
+  const fields = () => Array.from(form.elements).filter(el => el.name);
+  const questionNames = () => Array.from(new Set(fields().map(el => el.name)));
+  function collect() {
+    const out = {};
+    fields().forEach(el => {
+      if ((el.type === 'radio' || el.type === 'checkbox') && !el.checked) return;
+      const v = (el.value || '').trim();
+      if (v) out[el.name] = v;
+    });
+    return out;
+  }
+  function progress() {
+    const a = collect(); const names = questionNames();
+    const done = names.filter(n => a[n]).length;
+    bar.style.width = Math.round(100 * done / names.length) + '%';
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(a)); } catch (e) {}
+  }
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}');
+    Object.entries(d).forEach(([k, v]) => {
+      const els = form.querySelectorAll(`[name="${CSS.escape(k)}"]`);
+      els.forEach(el => { if (el.type === 'radio') el.checked = (el.value === v); else el.value = v; });
+    });
+  } catch (e) {}
+  const emailQ = document.getElementById('emailQ');
+  function syncEmail() {
+    const v = form.querySelector('input[name="preorder"]:checked');
+    emailQ.classList.toggle('hidden', !(v && v.value !== 'No'));
+  }
+  form.addEventListener('change', syncEmail); syncEmail();
+  form.addEventListener('input', progress);
+  form.addEventListener('change', progress);
+  progress();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = ''; msg.className = 'form-msg';
+    document.querySelectorAll('.missing').forEach(el => el.classList.remove('missing'));
+    const a = collect();
+
+    const missing = REQUIRED.filter(n => !a[n] && form.querySelector(`[name="${n}"]`));
+    if (missing.length) {
+      missing.forEach(n => { const q = form.querySelector(`[data-q="${n}"]`); if (q) q.classList.add('missing'); });
+      const first = form.querySelector(`[data-q="${missing[0]}"]`);
+      if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      fail(`${missing.length} required ${missing.length === 1 ? 'question is' : 'questions are'} still empty. They are outlined above.`);
+      return;
+    }
+
+    if (a.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email)) { fail('That email does not look quite right. Could you check it?'); return; }
+
+    const row = {
+      survey,
+      respondent_name: a.respondent_name || null,
+      respondent_role: a.respondent_role || null,
+      problem_clarity: num(a.problem_clarity),
+      solution_clarity: num(a.solution_clarity),
+      product_clarity: num(a.product_clarity),
+      heartstrings: a.heartstrings || null,
+      would_purchase: a.would_purchase || null,
+      price_range: a.price_range || null,
+      pricing_model: a.pricing_model || null,
+      judge_score: num(a.judge_score),
+      preorder: a.preorder || null,
+      email: (a.email || '').toLowerCase() || null,
+      answers: a,
+      user_agent: navigator.userAgent.slice(0, 300),
+    };
+
+    btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
+    try {
+      if (PREVIEW) { await new Promise(r => setTimeout(r, 700)); done(true); return; }
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/feedback_responses`, {
+        method: 'POST',
+        headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+        body: JSON.stringify(row),
+      });
+      if (res.status === 201 || res.status === 200 || res.status === 204) { done(false); return; }
+      fail('Could not send. Please try again in a moment, or screenshot your answers and send them to me directly.');
+    } catch (err) {
+      fail('Could not send. Check your connection and try again.');
+    } finally {
+      btn.disabled = false; btn.textContent = label;
+    }
+
+    function num(v) { const n = parseInt(v, 10); return Number.isFinite(n) ? n : null; }
+    function fail(t) { msg.textContent = t; msg.classList.add('err'); }
+    function done(preview) {
+      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+      form.classList.add('hidden');
+      document.querySelector('.intro').classList.add('hidden');
+      const t = document.getElementById('thanks');
+      t.classList.remove('hidden');
+      if (preview) document.getElementById('thanksText').textContent = 'Preview: nothing was saved. The form goes live on wombi.store.';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+})();
+</script>
+</body>
+</html>
