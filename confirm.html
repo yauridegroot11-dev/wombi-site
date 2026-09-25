@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Pre-order terms | Wombi</title>
-<meta name="description" content="What a Wombi pre-order is, when it ships, and how refunds work.">
-<meta name="robots" content="index, follow">
-<link rel="canonical" href="https://wombi.store/preorder-terms.html">
+<title>Confirm | Wombi</title>
+<meta name="description" content="Confirm your spot on the Wombi waitlist.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://wombi.store/confirm.html">
 <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
@@ -65,30 +65,38 @@
 </div></header>
 <main><div class="shell">
 
-<p class="eyebrow in">Pre-order terms</p>
-<h1 class="in d1">The deal, in <em>plain words.</em></h1>
-<p class="lede in d2">Wombi is made by Astralis LLC in Melbourne, Florida. These terms cover pre-orders placed on wombi.store through our Stripe checkout. Last updated 25 September 2026.</p>
-<div class="terms in d2">
-  <h2>1. What a pre-order is</h2>
-  <p>A pre-order reserves one Wombi wearable from our first production run. The price is $49, and that is the full price of the device for early supporters. You will not be asked to pay anything more for the device itself. We may raise the pre-order price later; the price you paid stays locked.</p>
-
-  <h2>2. When it ships</h2>
-  <p>We do not have a shipping date, and we are not promising one. Wombi is still in development. We will email you as things progress and, before we ship, ask you for a delivery address.</p>
-
-  <h2>3. Refunds, any time</h2>
-  <p>You can cancel your pre-order for a full refund at any time before your Wombi ships. Email <a href="mailto:hello@wombi.store">hello@wombi.store</a> from the address you used at checkout and we will issue the refund within seven business days. No reason needed.</p>
-
-  <h2>4. Automatic refund after three years</h2>
-  <p>If we have not shipped your Wombi within three years of your purchase date, we will refund you in full without you having to ask. Refunds go back to the payment method you used. If that method has been closed, we will contact you to arrange another way to pay you back.</p>
-
-  <h2>5. The product may change</h2>
-  <p>Colours, materials and details may differ from the renders and descriptions as we finish the design. If a change matters to you, you can cancel for a full refund as described above.</p>
-
-  <h2>6. Questions</h2>
-  <p>Email <a href="mailto:hello@wombi.store">hello@wombi.store</a>. These terms are governed by the laws of the State of Florida.</p>
-  <div class="rule"></div>
-  <p><a class="btn" href="https://buy.stripe.com/00w00kdsScyl8vv9JzabK06">Pre-order for $49</a> <a class="ghost" href="/">Back to wombi.store</a></p>
+<p class="eyebrow in">The waitlist</p>
+<h1 class="in d1" id="h">One <em>moment.</em></h1>
+<p class="lede in d2" id="m">Checking your link.</p>
+<div class="card in d2" id="extra" hidden>
+  <p style="margin:0 0 6px"><strong style="font-family:var(--display);font-weight:500">Want to be first in line?</strong></p>
+  <p style="margin:0">Pre-orders are open at $49, the full price for early supporters. Fully refundable any time before it ships.</p>
+  <p style="margin:14px 0 0"><a class="btn" href="https://buy.stripe.com/00w00kdsScyl8vv9JzabK06">Pre-order for $49</a></p>
 </div>
+<p class="in d2" id="back" hidden style="margin-top:28px"><a class="ghost" style="margin-left:0" href="/">Back to wombi.store</a></p>
+<script>
+(async () => {
+  const t = new URLSearchParams(location.search).get('t') || '';
+  const h = document.getElementById('h'), m = document.getElementById('m');
+  const show = (head, msg, extra) => {
+    h.innerHTML = head; m.textContent = msg;
+    document.getElementById('back').hidden = false;
+    if (extra) document.getElementById('extra').hidden = false;
+  };
+  if (!/^[0-9a-f-]{36}$/i.test(t)) {
+    show('This link is <em>incomplete.</em>', 'Tap the button in the email again, or sign up once more on wombi.store and we will send a fresh one.');
+    return;
+  }
+  try {
+    const r = await fetch('https://lxsvgadyswifsnhcbayq.supabase.co/functions/v1/waitlist', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: 'confirm', token: t }) });
+    const j = await r.json();
+    if (j.ok) show('You are <em>confirmed.</em>', 'You are on the Wombi list. We will write when there is something real to show you, and not before.', true);
+    else show('This link has <em>expired.</em>', 'Sign up again on wombi.store and we will send a fresh one.');
+  } catch (e) {
+    show('Something went <em>sideways.</em>', 'Please try the link again in a minute.');
+  }
+})();
+</script>
 
 </div></main>
 <footer><div class="shell foot">

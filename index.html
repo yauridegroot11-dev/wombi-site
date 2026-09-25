@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Wombi</title>
 <meta name="description" content="Wombi is a wearable for the ideas you would hate to forget. Coming soon. Join the waitlist.">
 <meta property="og:title" content="Wombi">
@@ -75,8 +75,8 @@
 
   /* ---------- the sky ---------- */
   #sky {
-    position: fixed; inset: 0;
-    width: 100%; height: 100%;
+    position: fixed; left: 0; top: 0;
+    width: 100%; height: 100vh; height: 100lvh;
     display: block;
     z-index: 0;
     pointer-events: none;
@@ -90,7 +90,7 @@
   @media (max-width: 900px) {
     .vignette {
       background:
-        linear-gradient(180deg, transparent 0%, transparent 16%, rgba(20,17,12,0.58) 34%, rgba(20,17,12,0.8) 55%, rgba(20,17,12,0.86) 100%);
+        linear-gradient(180deg, rgba(20,17,12,0.35) 0%, transparent 9%, transparent 36%, rgba(20,17,12,0.55) 46%, rgba(20,17,12,0.82) 60%, rgba(20,17,12,0.88) 100%);
     }
   }
   .cursor-glow {
@@ -254,6 +254,8 @@
   .btn:active { transform: translateY(0); }
   .btn:disabled { cursor: progress; opacity: 0.7; transform: none; }
   .btn, .btn-sm, .btn-ghost { text-shadow: none; }
+  .hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+  .done small { display: block; margin-top: 10px; font-family: var(--body); font-size: 14px; letter-spacing: 0; color: var(--taupe); }
   .btn-link { text-decoration: none; display: inline-block; }
   .btn-sm { padding: 9px 16px; font-size: 13.5px; text-decoration: none; display: inline-block; box-shadow: none; }
   .nav-right { display: flex; align-items: center; gap: 22px; }
@@ -437,7 +439,11 @@
     .wait-card { grid-template-columns: 1fr; gap: 28px; }
   }
   @media (max-width: 640px) {
-    .hero { padding-block: 120px 72px; min-height: 0; }
+    .hero { padding-block: max(300px, 46vh) 64px; min-height: 0; }
+    .hero h1 { font-size: clamp(2.5rem, 11.5vw, 3.2rem); margin-top: 14px; }
+    .hero .lede { margin-top: 18px; font-size: 1.05rem; }
+    .hero .form-wrap { margin-top: 26px; }
+    .nav.scrolled { background: rgba(20,17,12,0.9); }
     .row { flex-direction: column; }
     .nav-right { gap: 14px; }
     .nav-right .nav-link { display: none; }
@@ -547,6 +553,7 @@
               <label class="lbl" for="wl-email">Email address</label>
               <input class="field" id="wl-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
             </div>
+            <div class="hp" aria-hidden="true"><label>Company <input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
             <div><button class="btn" type="submit">Join the waitlist</button></div>
           </div>
           <p class="form-msg" role="alert" aria-live="polite"></p>
@@ -580,7 +587,8 @@
   ------------------------------------------------------------ */
   const canvas = document.getElementById('sky');
   const ctx = canvas.getContext('2d', { alpha: false });
-  const DPR = Math.min(3, window.devicePixelRatio || 1);
+  const coarse = !finePointer;
+  const DPR = Math.min(coarse ? 2 : 3, window.devicePixelRatio || 1);
   const glow = document.getElementById('glow');
 
   // Gold-forward palette. Cream is the highlight, not the body.
@@ -725,11 +733,13 @@
   holdUntil = 4;
 
   function resize() {
-    W = innerWidth; H = innerHeight;
+    const w = innerWidth;
+    const h = Math.round(canvas.getBoundingClientRect().height) || innerHeight; // large viewport height
+    if (w === W && h === H) return;          // iOS toolbar show/hide: nothing to do
+    W = w; H = h;
     canvas.width = Math.floor(W * DPR); canvas.height = Math.floor(H * DPR);
-    canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-    R = W < 900 ? Math.min(W * 0.46, H * 0.30) : Math.min(W * 0.30, H * 0.44);
+    R = W < 900 ? Math.min(W * 0.43, H * 0.27) : Math.min(W * 0.30, H * 0.44);
   }
   addEventListener('resize', resize, { passive: true }); resize();
 
@@ -741,14 +751,34 @@
     }, { passive: true });
     document.addEventListener('pointerleave', () => { hasMouse = false; });
   }
+  if (coarse && !reduced) {
+    const onTouch = (e) => {
+      const t = e.touches[0]; if (!t) return;
+      curX = t.clientX; curY = t.clientY; hasMouse = true;
+      tmx = 0.5 + (t.clientX / W - 0.5) * 0.7; tmy = 0.5 + (t.clientY / H - 0.5) * 0.4;
+    };
+    const offTouch = () => { hasMouse = false; tmx = 0.5; tmy = 0.5; };
+    addEventListener('touchstart', onTouch, { passive: true });
+    addEventListener('touchmove', onTouch, { passive: true });
+    addEventListener('touchend', offTouch, { passive: true });
+    addEventListener('touchcancel', offTouch, { passive: true });
+  }
   addEventListener('scroll', () => { scrollN = scrollY / H; }, { passive: true });
   scrollN = scrollY / H;
 
-  const PUSH_R = 200, PUSH_K = 54, FOV = 3.2;
+  const PUSH_R = coarse ? 130 : 200, PUSH_K = 54, FOV = 3.2;
+  // Quality governor: if frames run long (older phones, low power mode), thin the
+  // cloud evenly instead of stuttering. 0 = draw all, 4 = skip every 4th, 3, then 2.
+  let ftAvg = 16, ftFrames = 0, skip = 0;
   let yaw = 0, pitch = 0;
 
   function frame(now) {
-    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    const rawMs = now - last;
+    const dt = Math.min(0.05, rawMs / 1000); last = now;
+    if (rawMs > 0 && rawMs < 250) {
+      ftAvg = ftAvg * 0.95 + rawMs * 0.05;
+      if (++ftFrames > 120 && ftAvg > 26 && skip !== 2) { skip = skip === 0 ? 4 : skip - 1; ftFrames = 0; }
+    }
     if (!reduced) T += dt;
 
     // shape cycle
@@ -770,7 +800,7 @@
     const alpha = (reduced ? 0.8 : (1 - dim * 0.42)) * (mobile ? 0.85 : 1);
     const zoom = (1 + s2 * 0.20) * curScale;
     const cx = W * (mobile ? 0.5 : (0.69 - s1 * 0.19)) + (mx - 0.5) * -24;
-    const cy = H * (mobile ? 0.185 : 0.47) + (my - 0.5) * -18 + (mobile ? s2 * H * 0.10 : -s2 * H * 0.05);
+    const cy = H * (mobile ? 0.25 : 0.47) + (my - 0.5) * -18 + (mobile ? s2 * H * 0.10 : -s2 * H * 0.05);
 
     // rotation: auto spin, damped while the mark is showing; the mouse always has a say
     const autoYaw = T * 0.22 * spinK;
@@ -816,6 +846,7 @@
         sx = cx + x * Rz * persp + p.ox; sy = cy + y * Rz * persp + p.oy;
       }
       if (sx < -30 || sx > W + 30 || sy < -30 || sy > H + 30) continue;
+      if (skip && i % skip === 0) continue;
 
       const tw = p.tw ? (0.74 + 0.26 * Math.sin(T * (1.2 + p.tw) + p.ph)) : 1;
       const depth = 0.45 + 0.55 * Math.min(1.4, persp);         // nearer = brighter
@@ -890,35 +921,39 @@
   }
 
   /* ------------------------------------------------------------
-     Waitlist. Writes to the same Supabase table as the Lovable
-     build (insert-only, anonymous). Publishable key is safe to ship.
+     Waitlist. Double opt-in through the `waitlist` edge function in
+     the Wombi Supabase project: saves the address as pending and
+     sends a confirmation email from hello@wombi.store.
   ------------------------------------------------------------ */
-  const SUPABASE_URL = 'https://ypqlttdxiehgpaxtkaep.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable_ToxoRDgK9t5Ks9RVzP8KYg_PjUOMYD8';
+  const WAITLIST_FN = 'https://lxsvgadyswifsnhcbayq.supabase.co/functions/v1/waitlist';
   const PREVIEW = /claude\.ai$|claudeusercontent|localhost|^file:/.test(location.hostname + location.protocol);
 
   document.querySelectorAll('form.wl').forEach(form => {
     const msg = form.querySelector('.form-msg');
-    const btn = form.querySelector('button');
+    const btn = form.querySelector('button[type="submit"]');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       msg.textContent = ''; msg.className = 'form-msg';
       const email = (form.email.value || '').trim().toLowerCase();
-      const moment = form.moment ? (form.moment.value || '').trim() : '';
       if (!email) { fail('Please add an email so we know where to write.'); return; }
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { fail('That email does not look quite right. Could you check it?'); return; }
-      if (moment.length > 500) { fail('Could you shorten that a little? We have room for a sentence or two.'); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { fail('That email does not look quite right. Could you check it?'); return; }
 
       btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
       try {
-        if (PREVIEW) { await new Promise(r => setTimeout(r, 700)); done(true); return; }
-        const res = await fetch(`${SUPABASE_URL}/rest/v1/waitlist`, {
+        if (PREVIEW) { await new Promise(r => setTimeout(r, 700)); done('pending', email, true); return; }
+        const res = await fetch(WAITLIST_FN, {
           method: 'POST',
-          headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-          body: JSON.stringify({ email, moment: moment || null }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'signup',
+            email,
+            source: form.dataset.variant || 'site',
+            company: form.company ? form.company.value : '',
+          }),
         });
-        if (res.status === 201 || res.status === 200 || res.status === 204) { done(false); return; }
-        if (res.status === 409) { fail('You are already on the list. We have you, and we will be in touch.'); return; }
+        const j = await res.json().catch(() => ({}));
+        if (res.ok && j.ok) { done(j.state, email, false, j.emailed); return; }
+        if (j.error === 'invalid_email') { fail('That email does not look quite right. Could you check it?'); return; }
         fail('Something went wrong on our side. Please try again in a moment.');
       } catch (err) {
         fail('Something went wrong on our side. Please try again in a moment.');
@@ -926,14 +961,21 @@
         btn.disabled = false; btn.textContent = label;
       }
       function fail(t) { msg.textContent = t; msg.classList.add('err'); }
-      function done(preview) {
+      function done(state, addr, preview, emailed) {
         const p = document.createElement('p');
         p.className = 'done';
-        p.innerHTML = 'You are on the list. We will be in touch when there is <b>something real</b> to show you.';
+        const safe = addr.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        if (state === 'confirmed') {
+          p.innerHTML = 'You are already on the list. <b>We have you.</b>';
+        } else if (emailed) {
+          p.innerHTML = 'Almost there. <b>Check your inbox.</b><small>We sent a confirmation email to ' + safe + '. Tap the button in it and you are in. Not there? Check spam or promotions.</small>';
+        } else {
+          p.innerHTML = 'You are saved. <b>One last step.</b><small>Look out for an email from hello@wombi.store at ' + safe + ' and tap Confirm to lock in your spot.</small>';
+        }
         form.replaceWith(p);
         if (preview) {
           const n = document.createElement('p'); n.className = 'micro';
-          n.textContent = 'Preview: nothing was saved. The form goes live once the page is hosted.';
+          n.textContent = 'Preview: nothing was saved. The form goes live on wombi.store.';
           p.after(n);
         }
       }
