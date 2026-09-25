@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wombi — Founding testers</title>
+<meta name="description" content="Use the Wombi app every week while the wearable is being built, tell me what is broken, and get your first Wombi for half.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://wombi.store/beta">
+<link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#14110C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=Inter:wght@400;500&display=swap">
+<style>
+  :root {
+    --ink:        #14110C;
+    --ink-2:      #1E1A13;
+    --ink-3:      #2A241B;
+    --cream:      #F5F0E3;
+    --cream-2:    #EBE2CE;
+    --gold-1:     #FACE5C;
+    --gold-2:     #E0A230;
+    --gold-3:     #C17301;
+    --gold-4:     #9A5A00;
+    --taupe:      #A3988A;
+    --taupe-deep: #6B6154;
+    --sand-line:  #D6CCB6;
+    --display: "Poppins", "Helvetica Neue", Arial, sans-serif;
+    --body:    "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --shell: 760px;
+    --gutter: clamp(20px, 4vw, 48px);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; color-scheme: dark; }
+  body {
+    margin: 0; background: var(--ink); color: var(--cream);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(90% 60% at 80% -10%, rgba(224,162,48,0.14) 0%, transparent 60%);
+  }
+  ::selection { background: var(--gold-2); color: var(--ink); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; line-height: 1.05; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold-2); outline-offset: 4px; border-radius: 2px; }
+  .shell { width: 100%; max-width: var(--shell); margin-inline: auto; padding-inline: var(--gutter); }
+
+  /* nav (same as home) */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(20,17,12,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(245,240,227,0.08); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 16px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand img { width: 30px; height: auto; display: block; }
+  .wordmark { font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); line-height: 1; transform: translateY(1px); }
+  .nav-link { position: relative; font-size: 14px; font-weight: 500; color: var(--cream); text-decoration: none; padding-bottom: 3px; }
+  .nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold-2); transform: scaleX(0); transform-origin: left center; transition: transform 380ms var(--ease-out); }
+  .nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); }
+  .progress { height: 2px; background: rgba(245,240,227,0.08); }
+  .progress > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-2), var(--gold-1)); transition: width 320ms var(--ease-out); }
+
+  /* intro */
+  .intro { padding-block: clamp(56px, 10vw, 104px) 40px; }
+  .intro h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); }
+  .intro .lede { margin-top: 20px; max-width: 46ch; font-size: 1.05rem; line-height: 1.7; color: rgba(245,240,227,0.74); }
+  .intro .meta { margin-top: 18px; font-size: 13.5px; color: var(--taupe); }
+  .intro .meta b { color: var(--gold-1); font-weight: 500; }
+
+  /* sections */
+  .sec { padding-block: 40px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .sec h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .sec .hint { margin-top: 8px; font-size: 15px; color: var(--taupe); max-width: 52ch; }
+  .q { margin-top: 34px; }
+  .q > label.qt, .q > .qt { display: block; font-size: 17px; font-weight: 500; color: var(--cream); line-height: 1.45; }
+  .q .sub { margin-top: 4px; font-size: 14px; color: var(--taupe); }
+  .q .req { color: var(--gold-2); }
+
+  /* controls */
+  .field {
+    width: 100%; font: inherit; font-size: 16px; color: var(--cream);
+    background: rgba(245,240,227,0.06); border: 1px solid rgba(245,240,227,0.16);
+    border-radius: 6px; padding: 13px 15px; margin-top: 12px;
+    transition: border-color 220ms ease, box-shadow 320ms var(--ease-out), background-color 220ms ease;
+  }
+  textarea.field { min-height: 96px; resize: vertical; line-height: 1.5; }
+  .field::placeholder { color: rgba(245,240,227,0.34); }
+  .field:focus { outline: none; border-color: var(--gold-2); background: rgba(245,240,227,0.08); box-shadow: 0 0 0 4px rgba(224,162,48,0.18); }
+
+  .scale { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .scale label { position: relative; flex: 1 1 0; min-width: 44px; }
+  .scale input { position: absolute; opacity: 0; inset: 0; }
+  .scale span {
+    display: block; text-align: center; padding: 12px 0; border-radius: 6px;
+    font-family: var(--display); font-weight: 500; font-size: 16px;
+    background: rgba(245,240,227,0.06); border: 1px solid rgba(245,240,227,0.14); color: var(--cream);
+    cursor: pointer; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  }
+  .scale label:hover span { border-color: rgba(250,206,92,0.5); }
+  .scale input:checked + span { background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); color: var(--ink); border-color: transparent; }
+  .scale input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 3px; }
+  .ends { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12.5px; color: var(--taupe); }
+
+  .opts { display: grid; gap: 8px; margin-top: 12px; }
+  .opts label { position: relative; display: block; }
+  .opts input { position: absolute; opacity: 0; inset: 0; }
+  .opts span {
+    display: block; padding: 12px 16px 12px 44px; border-radius: 6px; font-size: 15.5px;
+    background: rgba(245,240,227,0.05); border: 1px solid rgba(245,240,227,0.13); cursor: pointer;
+    transition: background-color 180ms ease, border-color 180ms ease;
+  }
+  .opts span::before {
+    content: ""; position: absolute; left: 16px; top: 50%; width: 16px; height: 16px; margin-top: -8px;
+    border-radius: 50%; border: 1.5px solid rgba(245,240,227,0.4); transition: all 180ms ease;
+  }
+  .opts input[type=checkbox] + span::before { border-radius: 4px; }
+  .opts label:hover span { border-color: rgba(250,206,92,0.45); }
+  .opts input:checked + span { background: rgba(224,162,48,0.14); border-color: var(--gold-2); }
+  .opts input:checked + span::before { background: var(--gold-1); border-color: var(--gold-1); box-shadow: inset 0 0 0 3px var(--ink); }
+  .opts input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 3px; }
+
+  .grid { margin-top: 12px; display: grid; grid-template-columns: 1fr repeat(3, minmax(64px, 96px)); gap: 6px 4px; align-items: center; font-size: 14px; }
+  .grid .h { font-size: 12px; color: var(--taupe); text-align: center; line-height: 1.2; }
+  .grid .r { color: rgba(245,240,227,0.88); padding-block: 6px; }
+  .grid label { position: relative; display: block; height: 100%; }
+  .grid input { position: absolute; opacity: 0; inset: 0; }
+  .grid span { display: block; height: 38px; border-radius: 6px; background: rgba(245,240,227,0.05); border: 1px solid rgba(245,240,227,0.13); cursor: pointer; }
+  .grid input:checked + span { background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); border-color: transparent; }
+  .grid input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 2px; }
+
+  .btn {
+    font-family: var(--display); font-weight: 600; font-size: 15px; letter-spacing: 0.01em; color: var(--ink);
+    background: linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 100%); border: 0; border-radius: 6px;
+    padding: 15px 26px; cursor: pointer; white-space: nowrap;
+    transition: transform 220ms var(--ease-out), box-shadow 220ms ease, filter 220ms ease;
+    box-shadow: 0 10px 30px -14px rgba(224,162,48,0.55);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(224,162,48,0.7); filter: brightness(1.04); }
+  .btn:disabled { cursor: progress; opacity: 0.7; transform: none; }
+  .submit { padding-block: 40px 80px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .submit .micro { margin-top: 14px; font-size: 13.5px; color: var(--taupe); max-width: 48ch; }
+  .form-msg { margin-top: 14px; font-size: 14.5px; }
+  .form-msg.err { color: #E9A98C; }
+  .done { padding-block: 80px 120px; }
+  .done h2 { font-size: clamp(2rem, 5vw, 3rem); }
+  .done h2 b { color: var(--gold-1); font-weight: 500; }
+  .done p { margin-top: 18px; color: rgba(245,240,227,0.74); max-width: 46ch; }
+  .hidden { display: none !important; }
+  .missing { box-shadow: 0 0 0 2px #E9A98C; border-radius: 8px; }
+
+  footer { padding-block: 40px 56px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .foot { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; font-size: 13.5px; color: var(--taupe); }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--gold-1); }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr repeat(3, 56px); }
+    .scale span { font-size: 15px; padding: 11px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+
+  .eyebrow { font-size: 11.5px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-2); margin-bottom: 18px; }
+  .intro h1 em { font-style: normal; color: var(--gold-1); }
+  .deal { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 26px; }
+  .card { padding: 22px 22px 20px; border-radius: 10px; background: rgba(245,240,227,0.045); border: 1px solid rgba(245,240,227,0.1); }
+  .card.gold { background: linear-gradient(180deg, rgba(250,206,92,0.12), rgba(224,162,48,0.05)); border-color: rgba(224,162,48,0.38); }
+  .card h3 { font-size: 13px; font-family: var(--body); font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-2); margin-bottom: 14px; }
+  .price { font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; font-size: clamp(2.4rem, 6vw, 3.2rem); line-height: 1; color: var(--gold-1); }
+  .price s { font-size: 0.45em; color: var(--taupe); margin-left: 8px; letter-spacing: 0; }
+  .card ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  .card li { position: relative; padding-left: 20px; font-size: 15.5px; line-height: 1.5; color: rgba(245,240,227,0.88); }
+  .card li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 7px; height: 7px; border-radius: 50%; background: var(--gold-2); }
+  .card .small { margin-top: 14px; font-size: 14px; color: var(--taupe); line-height: 1.55; }
+  .steps { margin-top: 22px; display: grid; gap: 0; counter-reset: s; }
+  .steps li { list-style: none; counter-increment: s; position: relative; padding: 16px 0 16px 52px; border-top: 1px solid rgba(245,240,227,0.08); font-size: 15.5px; color: rgba(245,240,227,0.84); }
+  .steps li:first-child { border-top: 0; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 14px; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 500; font-size: 14px; color: var(--ink); background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); }
+  .steps b { color: var(--cream); font-weight: 500; }
+  .agree { display: flex; gap: 12px; align-items: flex-start; margin-top: 30px; font-size: 15px; color: rgba(245,240,227,0.84); cursor: pointer; }
+  .agree input { width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--gold-2); flex: none; }
+  .agree a { color: var(--gold-1); }
+  @media (max-width: 640px) { .deal { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="shell nav-inner">
+    <a href="/" class="brand" aria-label="Wombi, home">
+      <img src="/icon-192.png?v=2" alt="" width="30" height="30">
+      <span class="wordmark">Wombi</span>
+    </a>
+    <a href="#apply" class="nav-link">Apply</a>
+  </div>
+</header>
+
+<main>
+  <section class="intro shell">
+    <p class="eyebrow">Founding testers · up to 30 spots</p>
+    <h1>Help build Wombi.<br><em>Get your first one for half.</em></h1>
+    <p class="lede">The Wombi wearable is being built. The app that catches your ideas and knows what to do with them already works, and I improve it every day. I am looking for a small group of writers, creators, makers and independent consultants to use it every week and tell me, bluntly, what is broken.</p>
+    <p class="meta">Six weeks. About <b>15 minutes a week</b> on top of using the app.</p>
+  </section>
+
+  <section class="sec shell">
+    <h2>The deal</h2>
+    <div class="deal">
+      <div class="card gold">
+        <h3>You get</h3>
+        <p class="price">$24.50<s>$49</s></p>
+        <ul style="margin-top:18px">
+          <li>Your first Wombi at half the early-supporter price</li>
+          <li>First in line when the first run ships</li>
+          <li>A direct line to me in a small private group</li>
+          <li>Your feedback, shipped. Often the same week</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>You give, for six weeks</h3>
+        <ul>
+          <li>Use the app on at least <b>3 days a week</b></li>
+          <li>A <b>2-minute check-in</b> every week</li>
+          <li>One <b>20-minute call</b> with me</li>
+          <li>Honesty. The blunt feedback is the useful feedback</li>
+        </ul>
+        <p class="small">The discount is earned when the six weeks are done. That is what keeps the group small and serious.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec shell">
+    <h2>How it works</h2>
+    <ol class="steps">
+      <li><b>Apply below.</b> It takes two minutes.</li>
+      <li><b>I pick the group</b> and email you from hello@wombi.store with the app and a time for a short kick-off call.</li>
+      <li><b>Use it for real.</b> On a walk, after a dream, in the middle of a project. Tell the group when it breaks and when it surprises you.</li>
+      <li><b>Every week,</b> a 2-minute check-in. Every two weeks, a note from me on what changed because of you.</li>
+      <li><b>After six weeks</b> you get a single-use code for your Wombi at $24.50. Already pre-ordered at $49? I refund the difference instead.</li>
+    </ol>
+  </section>
+
+  <form id="apply" class="sec shell" novalidate style="scroll-margin-top:80px">
+    <h2>Apply</h2>
+    <p class="hint">Everything here stays between us.</p>
+
+    <div class="q" data-q="name">
+      <label class="qt" for="name">Your name <span class="req">*</span></label>
+      <input class="field" id="name" name="name" type="text" autocomplete="name" maxlength="120" placeholder="First and last">
+    </div>
+
+    <div class="q" data-q="email">
+      <label class="qt" for="email">Email <span class="req">*</span></label>
+      <input class="field" id="email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="you@example.com">
+    </div>
+
+    <div class="q" data-q="what_you_make">
+      <label class="qt" for="what_you_make">What do you make? <span class="req">*</span></label>
+      <p class="sub">Writer, newsletter, videos, music, a product, consulting work. Whatever you would call it.</p>
+      <input class="field" id="what_you_make" name="what_you_make" type="text" maxlength="300" placeholder="I write a weekly newsletter about…">
+    </div>
+
+    <div class="q">
+      <label class="qt" for="long_project">What long project are you carrying right now?</label>
+      <textarea class="field" id="long_project" name="long_project" maxlength="1000" placeholder="The book, the album, the channel, the side business…"></textarea>
+    </div>
+
+    <div class="q" data-q="capture_now">
+      <p class="qt">When an idea hits, where does it go today? <span class="req">*</span></p>
+      <div class="opts">
+        <label><input type="radio" name="capture_now" value="Notes app"><span>A notes app</span></label>
+        <label><input type="radio" name="capture_now" value="Voice memos"><span>Voice memos</span></label>
+        <label><input type="radio" name="capture_now" value="Paper notebook"><span>A paper notebook</span></label>
+        <label><input type="radio" name="capture_now" value="Message to myself"><span>A message or email to myself</span></label>
+        <label><input type="radio" name="capture_now" value="Nowhere, it gets lost"><span>Nowhere. Most of them get lost</span></label>
+      </div>
+    </div>
+
+    <div class="q" data-q="phone">
+      <p class="qt">Which phone do you use? <span class="req">*</span></p>
+      <div class="opts">
+        <label><input type="radio" name="phone" value="iPhone"><span>iPhone</span></label>
+        <label><input type="radio" name="phone" value="Android"><span>Android</span></label>
+        <label><input type="radio" name="phone" value="Both"><span>Both</span></label>
+      </div>
+    </div>
+
+    <div class="q" data-q="weekly_time">
+      <p class="qt">Can you give it six weeks, three days a week? <span class="req">*</span></p>
+      <div class="opts">
+        <label><input type="radio" name="weekly_time" value="Yes, count me in"><span>Yes, count me in</span></label>
+        <label><input type="radio" name="weekly_time" value="Probably"><span>Probably, life permitting</span></label>
+        <label><input type="radio" name="weekly_time" value="Not sure"><span>Not sure yet</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <label class="qt" for="heard_from">How did you hear about this?</label>
+      <input class="field" id="heard_from" name="heard_from" type="text" maxlength="300" placeholder="A friend, Rednote, an event…">
+    </div>
+
+    <label class="agree" data-q="agreed_terms">
+      <input type="checkbox" id="agreed_terms" name="agreed_terms" value="yes">
+      <span>I have read the <a href="/beta-terms.html" target="_blank" rel="noopener">founding tester agreement</a>: what you can see, how I delete my data, and that the beta is confidential. <span class="req">*</span></span>
+    </label>
+
+    <div style="margin-top:34px">
+      <button class="btn" type="submit" id="send">Apply to test Wombi</button>
+      <p class="form-msg" id="msg" aria-live="polite"></p>
+    </div>
+  </form>
+
+  <section class="done shell hidden" id="thanks">
+    <h2>You are on the list. <b>Thank you.</b></h2>
+    <p id="thanksText">I read every application myself. If you are in, you will hear from me at hello@wombi.store with the app and a time to talk.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="shell foot">
+    <a href="/">wombi.store</a>
+    <span><a href="/beta-terms.html">Tester agreement</a> · © 2026 Wombi. All rights reserved.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const SUPABASE_URL = 'https://lxsvgadyswifsnhcbayq.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_5gG_hfA0AkxSuhH0QEWzPQ_r3KgZVEG';
+  const PREVIEW = /claude\.ai$|claudeusercontent|localhost|^file:/.test(location.hostname + location.protocol);
+  const form = document.getElementById('apply');
+  const msg = document.getElementById('msg');
+  const btn = document.getElementById('send');
+  const REQUIRED = ['name', 'email', 'what_you_make', 'capture_now', 'phone', 'weekly_time', 'agreed_terms'];
+  const DRAFT_KEY = 'wombi-beta-apply';
+
+  function collect() {
+    const out = {};
+    Array.from(form.elements).filter(el => el.name).forEach(el => {
+      if ((el.type === 'radio' || el.type === 'checkbox') && !el.checked) return;
+      const v = (el.value || '').trim(); if (v) out[el.name] = v;
+    });
+    return out;
+  }
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}');
+    Object.entries(d).forEach(([k, v]) => form.querySelectorAll(`[name="${CSS.escape(k)}"]`).forEach(el => {
+      if (el.type === 'radio') el.checked = el.value === v; else if (el.type !== 'checkbox') el.value = v;
+    }));
+  } catch (e) {}
+  form.addEventListener('input', () => { try { const a = collect(); delete a.agreed_terms; localStorage.setItem(DRAFT_KEY, JSON.stringify(a)); } catch (e) {} });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = ''; msg.className = 'form-msg';
+    document.querySelectorAll('.missing').forEach(el => el.classList.remove('missing'));
+    const a = collect();
+    const missing = REQUIRED.filter(n => !a[n]);
+    if (missing.length) {
+      missing.forEach(n => { const q = form.querySelector(`[data-q="${n}"]`); if (q) q.classList.add('missing'); });
+      form.querySelector(`[data-q="${missing[0]}"]`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return fail(`${missing.length} required ${missing.length === 1 ? 'field is' : 'fields are'} still empty. They are outlined above.`);
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email)) { form.querySelector('[data-q="email"]').classList.add('missing'); return fail('That email does not look quite right. Could you check it?'); }
+
+    const row = {
+      name: a.name, email: a.email.toLowerCase(),
+      what_you_make: a.what_you_make || null, long_project: a.long_project || null,
+      capture_now: a.capture_now || null, phone: a.phone || null,
+      weekly_time: a.weekly_time || null, heard_from: a.heard_from || null,
+      answers: Object.assign({}, a, { source: new URLSearchParams(location.search).get('ref') || null }),
+      agreed_terms: true, terms_version: 'beta-2026-09',
+      user_agent: navigator.userAgent.slice(0, 300),
+    };
+    btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
+    try {
+      if (PREVIEW) { await new Promise(r => setTimeout(r, 600)); return done('Preview: nothing was saved. The form goes live on wombi.store.'); }
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/beta_testers`, {
+        method: 'POST',
+        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(row),
+      });
+      if (res.ok) return done();
+      if (res.status === 409) return done('You had already applied with this email, so you are on the list. I will be in touch at hello@wombi.store.');
+      fail('Could not send. Please try again in a moment, or email hello@wombi.store.');
+    } catch (err) { fail('Could not send. Check your connection and try again.'); }
+    finally { btn.disabled = false; btn.textContent = label; }
+  });
+  function fail(t) { msg.textContent = t; msg.classList.add('err'); }
+  function done(text) {
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    form.classList.add('hidden');
+    if (text) document.getElementById('thanksText').textContent = text;
+    const t = document.getElementById('thanks'); t.classList.remove('hidden');
+    t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+})();
+</script>
+</body>
+</html>

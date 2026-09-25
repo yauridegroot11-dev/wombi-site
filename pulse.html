@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wombi — Weekly check-in</title>
+<meta name="description" content="Two-minute weekly check-in for Wombi founding testers.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=2">
+<meta name="theme-color" content="#14110C">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=Inter:wght@400;500&display=swap">
+<style>
+  :root {
+    --ink:        #14110C;
+    --ink-2:      #1E1A13;
+    --ink-3:      #2A241B;
+    --cream:      #F5F0E3;
+    --cream-2:    #EBE2CE;
+    --gold-1:     #FACE5C;
+    --gold-2:     #E0A230;
+    --gold-3:     #C17301;
+    --gold-4:     #9A5A00;
+    --taupe:      #A3988A;
+    --taupe-deep: #6B6154;
+    --sand-line:  #D6CCB6;
+    --display: "Poppins", "Helvetica Neue", Arial, sans-serif;
+    --body:    "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --shell: 760px;
+    --gutter: clamp(20px, 4vw, 48px);
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; color-scheme: dark; }
+  body {
+    margin: 0; background: var(--ink); color: var(--cream);
+    font-family: var(--body); font-size: 17px; line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    background-image: radial-gradient(90% 60% at 80% -10%, rgba(224,162,48,0.14) 0%, transparent 60%);
+  }
+  ::selection { background: var(--gold-2); color: var(--ink); }
+  h1, h2, h3 { font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; line-height: 1.05; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--gold-2); outline-offset: 4px; border-radius: 2px; }
+  .shell { width: 100%; max-width: var(--shell); margin-inline: auto; padding-inline: var(--gutter); }
+
+  /* nav (same as home) */
+  .nav { position: sticky; top: 0; z-index: 10; background: rgba(20,17,12,0.82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid rgba(245,240,227,0.08); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding-block: 16px; }
+  .brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+  .brand img { width: 30px; height: auto; display: block; }
+  .wordmark { font-family: var(--display); font-weight: 800; font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cream); line-height: 1; transform: translateY(1px); }
+  .nav-link { position: relative; font-size: 14px; font-weight: 500; color: var(--cream); text-decoration: none; padding-bottom: 3px; }
+  .nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold-2); transform: scaleX(0); transform-origin: left center; transition: transform 380ms var(--ease-out); }
+  .nav-link:hover::after, .nav-link:focus-visible::after { transform: scaleX(1); }
+  .progress { height: 2px; background: rgba(245,240,227,0.08); }
+  .progress > i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--gold-2), var(--gold-1)); transition: width 320ms var(--ease-out); }
+
+  /* intro */
+  .intro { padding-block: clamp(56px, 10vw, 104px) 40px; }
+  .intro h1 { font-size: clamp(2.4rem, 6vw, 3.9rem); }
+  .intro .lede { margin-top: 20px; max-width: 46ch; font-size: 1.05rem; line-height: 1.7; color: rgba(245,240,227,0.74); }
+  .intro .meta { margin-top: 18px; font-size: 13.5px; color: var(--taupe); }
+  .intro .meta b { color: var(--gold-1); font-weight: 500; }
+
+  /* sections */
+  .sec { padding-block: 40px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .sec h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+  .sec .hint { margin-top: 8px; font-size: 15px; color: var(--taupe); max-width: 52ch; }
+  .q { margin-top: 34px; }
+  .q > label.qt, .q > .qt { display: block; font-size: 17px; font-weight: 500; color: var(--cream); line-height: 1.45; }
+  .q .sub { margin-top: 4px; font-size: 14px; color: var(--taupe); }
+  .q .req { color: var(--gold-2); }
+
+  /* controls */
+  .field {
+    width: 100%; font: inherit; font-size: 16px; color: var(--cream);
+    background: rgba(245,240,227,0.06); border: 1px solid rgba(245,240,227,0.16);
+    border-radius: 6px; padding: 13px 15px; margin-top: 12px;
+    transition: border-color 220ms ease, box-shadow 320ms var(--ease-out), background-color 220ms ease;
+  }
+  textarea.field { min-height: 96px; resize: vertical; line-height: 1.5; }
+  .field::placeholder { color: rgba(245,240,227,0.34); }
+  .field:focus { outline: none; border-color: var(--gold-2); background: rgba(245,240,227,0.08); box-shadow: 0 0 0 4px rgba(224,162,48,0.18); }
+
+  .scale { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+  .scale label { position: relative; flex: 1 1 0; min-width: 44px; }
+  .scale input { position: absolute; opacity: 0; inset: 0; }
+  .scale span {
+    display: block; text-align: center; padding: 12px 0; border-radius: 6px;
+    font-family: var(--display); font-weight: 500; font-size: 16px;
+    background: rgba(245,240,227,0.06); border: 1px solid rgba(245,240,227,0.14); color: var(--cream);
+    cursor: pointer; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease;
+  }
+  .scale label:hover span { border-color: rgba(250,206,92,0.5); }
+  .scale input:checked + span { background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); color: var(--ink); border-color: transparent; }
+  .scale input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 3px; }
+  .ends { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12.5px; color: var(--taupe); }
+
+  .opts { display: grid; gap: 8px; margin-top: 12px; }
+  .opts label { position: relative; display: block; }
+  .opts input { position: absolute; opacity: 0; inset: 0; }
+  .opts span {
+    display: block; padding: 12px 16px 12px 44px; border-radius: 6px; font-size: 15.5px;
+    background: rgba(245,240,227,0.05); border: 1px solid rgba(245,240,227,0.13); cursor: pointer;
+    transition: background-color 180ms ease, border-color 180ms ease;
+  }
+  .opts span::before {
+    content: ""; position: absolute; left: 16px; top: 50%; width: 16px; height: 16px; margin-top: -8px;
+    border-radius: 50%; border: 1.5px solid rgba(245,240,227,0.4); transition: all 180ms ease;
+  }
+  .opts input[type=checkbox] + span::before { border-radius: 4px; }
+  .opts label:hover span { border-color: rgba(250,206,92,0.45); }
+  .opts input:checked + span { background: rgba(224,162,48,0.14); border-color: var(--gold-2); }
+  .opts input:checked + span::before { background: var(--gold-1); border-color: var(--gold-1); box-shadow: inset 0 0 0 3px var(--ink); }
+  .opts input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 3px; }
+
+  .grid { margin-top: 12px; display: grid; grid-template-columns: 1fr repeat(3, minmax(64px, 96px)); gap: 6px 4px; align-items: center; font-size: 14px; }
+  .grid .h { font-size: 12px; color: var(--taupe); text-align: center; line-height: 1.2; }
+  .grid .r { color: rgba(245,240,227,0.88); padding-block: 6px; }
+  .grid label { position: relative; display: block; height: 100%; }
+  .grid input { position: absolute; opacity: 0; inset: 0; }
+  .grid span { display: block; height: 38px; border-radius: 6px; background: rgba(245,240,227,0.05); border: 1px solid rgba(245,240,227,0.13); cursor: pointer; }
+  .grid input:checked + span { background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); border-color: transparent; }
+  .grid input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 2px; }
+
+  .btn {
+    font-family: var(--display); font-weight: 600; font-size: 15px; letter-spacing: 0.01em; color: var(--ink);
+    background: linear-gradient(180deg, var(--gold-1) 0%, var(--gold-2) 100%); border: 0; border-radius: 6px;
+    padding: 15px 26px; cursor: pointer; white-space: nowrap;
+    transition: transform 220ms var(--ease-out), box-shadow 220ms ease, filter 220ms ease;
+    box-shadow: 0 10px 30px -14px rgba(224,162,48,0.55);
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgba(224,162,48,0.7); filter: brightness(1.04); }
+  .btn:disabled { cursor: progress; opacity: 0.7; transform: none; }
+  .submit { padding-block: 40px 80px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .submit .micro { margin-top: 14px; font-size: 13.5px; color: var(--taupe); max-width: 48ch; }
+  .form-msg { margin-top: 14px; font-size: 14.5px; }
+  .form-msg.err { color: #E9A98C; }
+  .done { padding-block: 80px 120px; }
+  .done h2 { font-size: clamp(2rem, 5vw, 3rem); }
+  .done h2 b { color: var(--gold-1); font-weight: 500; }
+  .done p { margin-top: 18px; color: rgba(245,240,227,0.74); max-width: 46ch; }
+  .hidden { display: none !important; }
+  .missing { box-shadow: 0 0 0 2px #E9A98C; border-radius: 8px; }
+
+  footer { padding-block: 40px 56px; border-top: 1px solid rgba(245,240,227,0.08); }
+  .foot { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; font-size: 13.5px; color: var(--taupe); }
+  .foot a { text-decoration: none; }
+  .foot a:hover { color: var(--gold-1); }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr repeat(3, 56px); }
+    .scale span { font-size: 15px; padding: 11px 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
+
+  .eyebrow { font-size: 11.5px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-2); margin-bottom: 18px; }
+  .scale.days label { min-width: 38px; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="shell nav-inner">
+    <a href="/" class="brand" aria-label="Wombi, home">
+      <img src="/icon-192.png?v=2" alt="" width="30" height="30">
+      <span class="wordmark">Wombi</span>
+    </a>
+    <span class="nav-link" id="weekTag">Founding testers</span>
+  </div>
+  <div class="progress" aria-hidden="true"><i id="bar"></i></div>
+</header>
+
+<main>
+  <section class="intro shell">
+    <p class="eyebrow" id="eyebrow">Weekly check-in</p>
+    <h1>Two minutes.<br>How was your week with Wombi?</h1>
+    <p class="meta">Short answers are perfect. Blunt ones are better.</p>
+  </section>
+
+  <form id="fb" class="sec shell" novalidate>
+    <div class="q" data-q="email" style="margin-top:0">
+      <label class="qt" for="email">Your email <span class="req">*</span></label>
+      <p class="sub">The one you applied with, so I can match this to you. Remembered on this device.</p>
+      <input class="field" id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
+    </div>
+
+    <div class="q" data-q="days_used">
+      <p class="qt">On how many days did you use the app this week? <span class="req">*</span></p>
+      <div class="scale days" role="radiogroup" aria-label="Days used, 0 to 7">
+        <label><input type="radio" name="days_used" value="0"><span>0</span></label>
+        <label><input type="radio" name="days_used" value="1"><span>1</span></label>
+        <label><input type="radio" name="days_used" value="2"><span>2</span></label>
+        <label><input type="radio" name="days_used" value="3"><span>3</span></label>
+        <label><input type="radio" name="days_used" value="4"><span>4</span></label>
+        <label><input type="radio" name="days_used" value="5"><span>5</span></label>
+        <label><input type="radio" name="days_used" value="6"><span>6</span></label>
+        <label><input type="radio" name="days_used" value="7"><span>7</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <label class="qt" for="captured">What did you capture this week?</label>
+      <p class="sub">The kind of thing, not the content. "Two ideas for my newsletter on a run."</p>
+      <input class="field" id="captured" name="captured" type="text" maxlength="500" placeholder="Mostly…">
+    </div>
+
+    <div class="q">
+      <label class="qt" for="annoyed">What annoyed you or broke?</label>
+      <textarea class="field" id="annoyed" name="annoyed" maxlength="3000" placeholder="The more specific, the faster I fix it"></textarea>
+    </div>
+
+    <div class="q">
+      <label class="qt" for="best_moment">Best moment of the week with it, if any?</label>
+      <input class="field" id="best_moment" name="best_moment" type="text" maxlength="500" placeholder="When it…">
+    </div>
+
+    <div class="q" data-q="disappointed">
+      <p class="qt">How would you feel if you could no longer use Wombi? <span class="req">*</span></p>
+      <div class="opts">
+        <label><input type="radio" name="disappointed" value="Very disappointed"><span>Very disappointed</span></label>
+        <label><input type="radio" name="disappointed" value="Somewhat disappointed"><span>Somewhat disappointed</span></label>
+        <label><input type="radio" name="disappointed" value="Not disappointed"><span>Not disappointed, it is not there yet</span></label>
+      </div>
+    </div>
+
+    <div class="q">
+      <label class="qt" for="would_pay_for">What would you actually pay for?</label>
+      <p class="sub">A feature, a result, a feeling. Or "nothing yet".</p>
+      <input class="field" id="would_pay_for" name="would_pay_for" type="text" maxlength="500" placeholder="I would pay for…">
+    </div>
+
+    <div class="q">
+      <label class="qt" for="anything_else">Anything else?</label>
+      <textarea class="field" id="anything_else" name="anything_else" maxlength="3000" placeholder="Open floor"></textarea>
+    </div>
+
+    <div style="margin-top:34px">
+      <button class="btn" type="submit" id="send">Send check-in</button>
+      <p class="form-msg" id="msg" aria-live="polite"></p>
+    </div>
+  </form>
+
+  <section class="done shell hidden" id="thanks">
+    <h2>Got it. <b>Thank you.</b></h2>
+    <p id="thanksText">I read every check-in. Watch the group for what changes because of it.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="shell foot">
+    <a href="/">wombi.store</a>
+    <span><a href="/beta-terms.html">Tester agreement</a> · © 2026 Wombi</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  /* wombi.store/pulse?w=3 → saved to feedback_responses with survey "beta-w3" */
+  const params = new URLSearchParams(location.search);
+  const week = (params.get('w') || '').replace(/[^0-9]/g, '').slice(0, 2);
+  const survey = week ? 'beta-w' + week : 'beta-pulse';
+  if (week) { document.getElementById('eyebrow').textContent = 'Weekly check-in · week ' + week; document.getElementById('weekTag').textContent = 'Week ' + week; }
+
+  const SUPABASE_URL = 'https://lxsvgadyswifsnhcbayq.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_5gG_hfA0AkxSuhH0QEWzPQ_r3KgZVEG';
+  const PREVIEW = /claude\.ai$|claudeusercontent|localhost|^file:/.test(location.hostname + location.protocol);
+  const form = document.getElementById('fb'), msg = document.getElementById('msg'), btn = document.getElementById('send'), bar = document.getElementById('bar');
+  const REQUIRED = ['email', 'days_used', 'disappointed'];
+  const emailEl = document.getElementById('email');
+  try { emailEl.value = params.get('e') || localStorage.getItem('wombi-tester-email') || ''; } catch (e) {}
+
+  function collect() {
+    const out = {};
+    Array.from(form.elements).filter(el => el.name).forEach(el => {
+      if ((el.type === 'radio' || el.type === 'checkbox') && !el.checked) return;
+      const v = (el.value || '').trim(); if (v) out[el.name] = v;
+    });
+    return out;
+  }
+  function progress() {
+    const names = Array.from(new Set(Array.from(form.elements).filter(el => el.name).map(el => el.name)));
+    const a = collect(); bar.style.width = Math.round(100 * names.filter(n => a[n]).length / names.length) + '%';
+  }
+  form.addEventListener('input', progress); form.addEventListener('change', progress); progress();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.textContent = ''; msg.className = 'form-msg';
+    document.querySelectorAll('.missing').forEach(el => el.classList.remove('missing'));
+    const a = collect();
+    const missing = REQUIRED.filter(n => !a[n]);
+    if (missing.length) {
+      missing.forEach(n => form.querySelector(`[data-q="${n}"]`).classList.add('missing'));
+      form.querySelector(`[data-q="${missing[0]}"]`).scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return fail(`${missing.length} required ${missing.length === 1 ? 'question is' : 'questions are'} still empty. They are outlined above.`);
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(a.email)) { form.querySelector('[data-q="email"]').classList.add('missing'); return fail('That email does not look quite right.'); }
+    const email = a.email.toLowerCase();
+    try { localStorage.setItem('wombi-tester-email', email); } catch (e) {}
+
+    const row = { survey, respondent_role: 'Beta tester', email, answers: Object.assign({ week: week ? +week : null }, a), user_agent: navigator.userAgent.slice(0, 300) };
+    btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
+    try {
+      if (PREVIEW) { await new Promise(r => setTimeout(r, 600)); return done('Preview: nothing was saved. The form goes live on wombi.store.'); }
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/feedback_responses`, {
+        method: 'POST',
+        headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+        body: JSON.stringify(row),
+      });
+      if (res.ok) return done();
+      fail('Could not send. Please try again in a moment, or drop it in the tester group.');
+    } catch (err) { fail('Could not send. Check your connection and try again.'); }
+    finally { btn.disabled = false; btn.textContent = label; }
+  });
+  function fail(t) { msg.textContent = t; msg.classList.add('err'); }
+  function done(text) {
+    form.classList.add('hidden'); document.querySelector('.intro').classList.add('hidden');
+    if (text) document.getElementById('thanksText').textContent = text;
+    document.getElementById('thanks').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+})();
+</script>
+</body>
+</html>
