@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Get the Wombi app</title>
-<meta name="description" content="The Wombi app for iPhone and Mac. Say what is on your mind; it gets transcribed and filed.">
+<meta name="description" content="The Wombi app for iPhone, with Mac coming soon. Say what is on your mind; it gets transcribed and filed.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://wombi.store/download">
 <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
@@ -77,6 +77,12 @@
   .key { display:flex; gap:14px; align-items:flex-start; padding:12px 0; border-top:1px solid rgba(245,240,227,0.08); }
   .key kbd { flex:0 0 auto; font-family:var(--display); font-weight:600; font-size:13px; color:var(--cream); border:1px solid rgba(245,240,227,0.22); border-radius:6px; padding:5px 10px; white-space:nowrap; }
   .key p { margin:0; color:rgba(245,240,227,0.86); }
+  .soon { display:inline-flex; align-items:center; gap:9px; align-self:flex-start; margin-top:8px; padding:10px 16px;
+    font-family:var(--display); font-weight:600; font-size:14.5px; color:var(--gold-1);
+    border:1px solid rgba(224,162,48,0.45); background:rgba(224,162,48,0.08); border-radius:999px; }
+  .soon::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--gold-1); box-shadow:0 0 10px 1px rgba(250,206,92,0.7); }
+  .app .muted { margin:4px 0 0; }
+  .app .muted a { color:var(--gold-1); }
 </style>
 <body>
 <header class="nav"><div class="shell">
@@ -85,7 +91,7 @@
 <main><div class="shell">
 <p class="eyebrow in">The app</p>
 <h1 class="in d1">Say it. <em>It gets organized.</em></h1>
-<p class="lede in d2">The Wombi app is what the wearable will talk to, and it already works. Talk or type whatever is on your mind; it is transcribed, split into notes, tasks and people, and filed. On your phone, and at your desk.</p>
+<p class="lede in d2">The Wombi app is what the wearable will talk to, and it already works. Talk or type whatever is on your mind; it is transcribed, split into notes, tasks and people, and filed. On your phone today, and at your desk soon.</p>
 
 <div class="apps in d2">
   <div class="card app">
@@ -97,28 +103,13 @@
   <div class="card app">
     <p class="kicker">Mac</p>
     <h2>Wombi for Mac</h2>
-    <p>Tap Option and talk, anywhere. Hold Control and the words go straight into whatever app you are in. Signed and notarized by Apple. macOS 13 or newer.</p>
-    <a class="btn" href="https://lxsvgadyswifsnhcbayq.supabase.co/storage/v1/object/public/downloads/Wombi.dmg">Download for Mac</a>
+    <p>Talk from anywhere on your Mac. Your words land in the app you are in, or get filed like everything else.</p>
+    <span class="soon">Coming soon</span>
+    <p class="muted"><a href="/#waitlist">Join the waitlist</a> to hear the day it is ready.</p>
   </div>
 </div>
 
 <div class="terms in d2">
-  <h2>Setting up the Mac</h2>
-  <ol class="steps">
-    <li><b>Install.</b> Open the file you downloaded and drag Wombi onto Applications, then open it from there. It has no window: a small kangaroo appears in the corner of the screen and an icon in the menu bar.</li>
-    <li><b>Sign in.</b> It asks the first time. Click Sign in… and your browser opens Wombi: sign in, or create an account if you are new. You do not need the phone app. Click Connect this Mac and you are back, connected. One account works on the phone and the Mac.</li>
-    <li><b>Microphone.</b> macOS asks the first time you record. Allow it.</li>
-    <li><b>Accessibility.</b> What lets it notice the Option key while you are in another app, and type into that app. System Settings → Privacy &amp; Security → Accessibility → turn on Wombi. It opens that pane for you.</li>
-  </ol>
-
-  <h2>What the keys do</h2>
-  <div class="keys">
-    <div class="key"><kbd>⌥ Option</kbd><p>Tap, talk, tap again. A braindump: filed into notes, tasks and projects.</p></div>
-    <div class="key"><kbd>⌃ Control</kbd><p>Hold, talk, let go. Dictation into the app your cursor is in: Claude, Slack, a mail draft. The words appear as you say them.</p></div>
-    <div class="key"><kbd>The kangaroo</kbd><p>Click it for one or two things Wombi has noticed, and a box to tell or ask it anything.</p></div>
-  </div>
-  <p class="muted" style="margin-top:18px">Press Escape while it is listening to throw the recording away. It never presses Return for you.</p>
-
   <div class="rule"></div>
   <p><a class="btn" href="/beta.html">Become a founding tester</a> <a class="ghost" href="/">Back to wombi.store</a></p>
 </div>
