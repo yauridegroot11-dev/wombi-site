@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wombi — Weekly check-in</title>
-<meta name="description" content="Weekly check-in for Wombi founding testers.">
+<title>Wombi — Tester feedback</title>
+<meta name="description" content="Feedback form for Wombi founding testers.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
@@ -191,8 +191,8 @@
 
 <main>
   <section class="intro shell">
-    <p class="eyebrow" id="eyebrow">Weekly check-in</p>
-    <h1 id="title">How was your week<br>with Wombi?</h1>
+    <p class="eyebrow" id="eyebrow">Founding tester feedback</p>
+    <h1 id="title">What do you think<br>of Wombi so far?</h1>
     <p class="lede">Every answer goes straight to me and shapes what I build next. Short answers are perfect. Blunt ones are better.</p>
     <p class="meta" id="meta">Takes about <b>5 minutes</b>. Only the starred questions are required.</p>
   </section>
@@ -204,7 +204,7 @@
       <h2>You</h2>
       <div class="q" data-q="email">
         <label class="qt" for="email">Your email <span class="req">*</span></label>
-        <p class="sub">The one I invited you on, so I can match your answers each week. Remembered on this device.</p>
+        <p class="sub">The one I invited you on, so I can match your answers if I send a follow-up later.</p>
         <input class="field" id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
       </div>
       <div class="q">
@@ -212,18 +212,18 @@
         <input class="field" id="respondent_name" name="respondent_name" type="text" autocomplete="given-name" maxlength="80" placeholder="Optional">
       </div>
       <div class="q" data-q="device">
-        <p class="qt">Where did you use Wombi this week?</p>
+        <p class="qt">Where have you used Wombi so far?</p>
         <div class="opts">
           <label><input type="checkbox" name="device" value="iPhone app"><span>iPhone app</span></label>
           <label><input type="checkbox" name="device" value="Mac app"><span>Mac app</span></label>
-          <label><input type="checkbox" name="device" value="Did not use it"><span>I did not use it this week</span></label>
+          <label><input type="checkbox" name="device" value="Not used yet"><span>I have not used it yet</span></label>
         </div>
       </div>
     </section>
 
-    <!-- Getting started: week 1 only -->
+    <!-- Getting started: first form only -->
     <section class="sec shell" data-only="first">
-      <h2>Getting started<small>First week only</small></h2>
+      <h2>Getting started</h2>
       <div class="q" data-q="setup_ease">
         <p class="qt">How easy was it to install the app from TestFlight and get into your account?</p>
         <div class="scale" role="radiogroup" aria-label="Setup ease, 1 to 5">
@@ -250,7 +250,7 @@
     <section class="sec shell">
       <h2>Using it</h2>
       <div class="q" data-q="days_used">
-        <p class="qt">On how many days did you use the app this week? <span class="req">*</span></p>
+        <p class="qt">In a typical week, on how many days do you use the app? <span class="req">*</span></p>
         <div class="scale tight" role="radiogroup" aria-label="Days used, 0 to 7">
           <label><input type="radio" name="days_used" value="0"><span>0</span></label>
           <label><input type="radio" name="days_used" value="1"><span>1</span></label>
@@ -271,7 +271,7 @@
         </div>
       </div>
       <div class="q">
-        <label class="qt" for="captured">What did you capture this week?</label>
+        <label class="qt" for="captured">What have you captured so far?</label>
         <p class="sub">The kind of thing, not the content. "Two ideas for my newsletter on a run."</p>
         <input class="field" id="captured" name="captured" type="text" maxlength="500" placeholder="Mostly…">
       </div>
@@ -334,7 +334,7 @@
     <section class="sec shell">
       <h2>What matters to you</h2>
       <div class="q" data-q="most_useful">
-        <p class="qt">Which part was most useful this week?</p>
+        <p class="qt">Which part has been most useful so far?</p>
         <div class="opts">
           <label><input type="radio" name="most_useful" value="Getting thoughts out fast"><span>Getting thoughts out of my head fast</span></label>
           <label><input type="radio" name="most_useful" value="Automatic filing"><span>Not having to organize anything myself</span></label>
@@ -371,9 +371,9 @@
       </div>
     </section>
 
-    <!-- Website: week 1 only -->
+    <!-- Website: first form only -->
     <section class="sec shell" data-only="first">
-      <h2>The website<small>First week only</small></h2>
+      <h2>The website</h2>
       <p class="hint">Take one minute on <a href="/" target="_blank" rel="noopener" style="color:var(--gold-1)">wombi.store</a> before answering.</p>
       <div class="q">
         <label class="qt" for="site_in_own_words">From the website alone, what is Wombi? One sentence.</label>
@@ -398,7 +398,7 @@
 
     <!-- The wearable -->
     <section class="sec shell" data-only="first">
-      <h2>The wearable<small>First week only</small></h2>
+      <h2>The wearable</h2>
       <p class="hint">Wombi will also be a small wearable: press it, speak, let go. No phone needed.</p>
       <div class="q" data-q="wearable_interest">
         <p class="qt">Would you rather press a button on your wrist than open the app?</p>
@@ -409,7 +409,7 @@
         </div>
       </div>
       <div class="q">
-        <label class="qt" for="wearable_when">When this week would a wearable have been better than your phone?</label>
+        <label class="qt" for="wearable_when">When would a wearable have been better than your phone?</label>
         <input class="field" id="wearable_when" name="wearable_when" type="text" maxlength="400" placeholder="On my run when…">
       </div>
     </section>
@@ -458,7 +458,7 @@
     </section>
 
     <section class="submit shell">
-      <button class="btn" type="submit" id="send">Send check-in</button>
+      <button class="btn" type="submit" id="send">Send feedback</button>
       <p class="micro">Your answers go straight to me and nobody else. Required questions are marked with a gold star.</p>
       <p class="form-msg" id="msg" aria-live="polite"></p>
     </section>
@@ -466,7 +466,7 @@
 
   <section class="done shell hidden" id="thanks">
     <h2>Got it. <b>Thank you.</b></h2>
-    <p id="thanksText">I read every check-in. Watch the group for what changes because of it.</p>
+    <p id="thanksText">I read every answer myself. You will see what changes because of it.</p>
   </section>
 </main>
 
@@ -479,22 +479,24 @@
 
 <script>
 (() => {
-  /* wombi.store/pulse?w=3 → saved to feedback_responses with survey "beta-w3".
-     Sections marked data-only="first" show in week 1 (or with ?full=1). */
+  /* wombi.store/pulse            → the founding tester feedback form (saved as survey "beta-w1")
+     wombi.store/pulse?w=2        → follow-up 2, shorter (saved as "beta-w2"), ?w=3 → follow-up 3 …
+     Sections marked data-only="first" appear only on the main form (or with ?full=1). */
   const params = new URLSearchParams(location.search);
-  const week = (params.get('w') || '').replace(/[^0-9]/g, '').slice(0, 2);
-  const survey = week ? 'beta-w' + week : 'beta-pulse';
-  const first = week === '1' || week === '' || params.get('full') === '1';
-  if (week) {
-    document.getElementById('eyebrow').textContent = 'Weekly check-in · week ' + week;
-    document.getElementById('weekTag').textContent = 'Week ' + week;
+  const n = parseInt((params.get('w') || '1').replace(/[^0-9]/g, ''), 10) || 1;
+  const week = String(n);
+  const survey = 'beta-w' + n;
+  const first = n === 1 || params.get('full') === '1';
+  if (n > 1) {
+    document.getElementById('eyebrow').textContent = 'Founding tester follow-up';
+    document.getElementById('title').innerHTML = 'A quick follow-up<br>on Wombi.';
+    document.title = 'Wombi — Follow-up';
   }
   if (!first) {
     document.querySelectorAll('[data-only="first"]').forEach(el => el.remove());
     document.getElementById('meta').innerHTML = 'Takes about <b>3 minutes</b>. Only the starred questions are required.';
   } else {
-    document.getElementById('title').innerHTML = 'Your first week<br>with Wombi.';
-    document.getElementById('meta').innerHTML = 'Takes about <b>6 minutes</b> this first time, shorter after. Only the starred questions are required.';
+    document.getElementById('meta').innerHTML = 'Takes about <b>5 minutes</b>. Only the starred questions are required.';
   }
 
   const SUPABASE_URL = 'https://lxsvgadyswifsnhcbayq.supabase.co';
@@ -502,7 +504,7 @@
   const PREVIEW = /claude\.ai$|claudeusercontent|localhost|^file:/.test(location.hostname + location.protocol);
   const form = document.getElementById('fb'), msg = document.getElementById('msg'), btn = document.getElementById('send'), bar = document.getElementById('bar');
   const REQUIRED = ['email', 'days_used', 'disappointed'];
-  const DRAFT_KEY = 'wombi-pulse-' + survey;
+  const DRAFT_KEY = 'wombi-feedback-' + survey;
   const emailEl = document.getElementById('email');
 
   function collect() {
@@ -553,7 +555,7 @@
     const row = {
       survey, respondent_role: 'Beta tester', email,
       respondent_name: a.respondent_name || null,
-      answers: Object.assign({ week: week ? +week : null }, a),
+      answers: Object.assign({ form: n === 1 ? 'initial' : 'follow-up ' + n }, a),
       user_agent: navigator.userAgent.slice(0, 300),
     };
     btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
