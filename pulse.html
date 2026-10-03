@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wombi — Weekly check-in</title>
-<meta name="description" content="Two-minute weekly check-in for Wombi founding testers.">
+<meta name="description" content="Weekly check-in for Wombi founding testers.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.ico?v=2" sizes="16x16 32x32 48x48">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png?v=2">
@@ -159,7 +159,21 @@
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; } }
 
   .eyebrow { font-size: 11.5px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-2); margin-bottom: 18px; }
-  .scale.days label { min-width: 38px; }
+  .scale.tight { flex-wrap: nowrap; gap: 6px; }
+  .scale.tight label { min-width: 0; }
+  .scale.tight span { font-size: 15px; padding: 12px 0; }
+  .scale.xtight { flex-wrap: nowrap; gap: 4px; }
+  .scale.xtight label { min-width: 0; }
+  .scale.xtight span { font-size: 14px; padding: 11px 0; }
+  .grid > span { background: none; border: 0; height: auto; cursor: default; }
+  .grid.g4 { grid-template-columns: 1fr repeat(4, minmax(52px, 84px)); }
+  .sec h2 small { display: block; margin-top: 6px; font-family: var(--body); font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-2); }
+  @media (max-width: 560px) {
+    .grid.g4 { grid-template-columns: 1fr repeat(4, 46px); gap: 6px 3px; }
+    .grid.g4 .h { font-size: 10.5px; }
+    .grid.g4 .r { font-size: 13.5px; }
+    .scale.xtight span { font-size: 13px; }
+  }
 </style>
 </head>
 <body>
@@ -178,71 +192,315 @@
 <main>
   <section class="intro shell">
     <p class="eyebrow" id="eyebrow">Weekly check-in</p>
-    <h1>Two minutes.<br>How was your week with Wombi?</h1>
-    <p class="meta">Short answers are perfect. Blunt ones are better.</p>
+    <h1 id="title">How was your week<br>with Wombi?</h1>
+    <p class="lede">Every answer goes straight to me and shapes what I build next. Short answers are perfect. Blunt ones are better.</p>
+    <p class="meta" id="meta">Takes about <b>5 minutes</b>. Only the starred questions are required.</p>
   </section>
 
-  <form id="fb" class="sec shell" novalidate>
-    <div class="q" data-q="email" style="margin-top:0">
-      <label class="qt" for="email">Your email <span class="req">*</span></label>
-      <p class="sub">The one you applied with, so I can match this to you. Remembered on this device.</p>
-      <input class="field" id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
-    </div>
+  <form id="fb" novalidate>
 
-    <div class="q" data-q="days_used">
-      <p class="qt">On how many days did you use the app this week? <span class="req">*</span></p>
-      <div class="scale days" role="radiogroup" aria-label="Days used, 0 to 7">
-        <label><input type="radio" name="days_used" value="0"><span>0</span></label>
-        <label><input type="radio" name="days_used" value="1"><span>1</span></label>
-        <label><input type="radio" name="days_used" value="2"><span>2</span></label>
-        <label><input type="radio" name="days_used" value="3"><span>3</span></label>
-        <label><input type="radio" name="days_used" value="4"><span>4</span></label>
-        <label><input type="radio" name="days_used" value="5"><span>5</span></label>
-        <label><input type="radio" name="days_used" value="6"><span>6</span></label>
-        <label><input type="radio" name="days_used" value="7"><span>7</span></label>
+    <!-- You -->
+    <section class="sec shell">
+      <h2>You</h2>
+      <div class="q" data-q="email">
+        <label class="qt" for="email">Your email <span class="req">*</span></label>
+        <p class="sub">The one I invited you on, so I can match your answers each week. Remembered on this device.</p>
+        <input class="field" id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com">
       </div>
-    </div>
-
-    <div class="q">
-      <label class="qt" for="captured">What did you capture this week?</label>
-      <p class="sub">The kind of thing, not the content. "Two ideas for my newsletter on a run."</p>
-      <input class="field" id="captured" name="captured" type="text" maxlength="500" placeholder="Mostly…">
-    </div>
-
-    <div class="q">
-      <label class="qt" for="annoyed">What annoyed you or broke?</label>
-      <textarea class="field" id="annoyed" name="annoyed" maxlength="3000" placeholder="The more specific, the faster I fix it"></textarea>
-    </div>
-
-    <div class="q">
-      <label class="qt" for="best_moment">Best moment of the week with it, if any?</label>
-      <input class="field" id="best_moment" name="best_moment" type="text" maxlength="500" placeholder="When it…">
-    </div>
-
-    <div class="q" data-q="disappointed">
-      <p class="qt">How would you feel if you could no longer use Wombi? <span class="req">*</span></p>
-      <div class="opts">
-        <label><input type="radio" name="disappointed" value="Very disappointed"><span>Very disappointed</span></label>
-        <label><input type="radio" name="disappointed" value="Somewhat disappointed"><span>Somewhat disappointed</span></label>
-        <label><input type="radio" name="disappointed" value="Not disappointed"><span>Not disappointed, it is not there yet</span></label>
+      <div class="q">
+        <label class="qt" for="respondent_name">First name</label>
+        <input class="field" id="respondent_name" name="respondent_name" type="text" autocomplete="given-name" maxlength="80" placeholder="Optional">
       </div>
-    </div>
+      <div class="q" data-q="device">
+        <p class="qt">Where did you use Wombi this week?</p>
+        <div class="opts">
+          <label><input type="checkbox" name="device" value="iPhone app"><span>iPhone app</span></label>
+          <label><input type="checkbox" name="device" value="Mac app"><span>Mac app</span></label>
+          <label><input type="checkbox" name="device" value="Did not use it"><span>I did not use it this week</span></label>
+        </div>
+      </div>
+    </section>
 
-    <div class="q">
-      <label class="qt" for="would_pay_for">What would you actually pay for?</label>
-      <p class="sub">A feature, a result, a feeling. Or "nothing yet".</p>
-      <input class="field" id="would_pay_for" name="would_pay_for" type="text" maxlength="500" placeholder="I would pay for…">
-    </div>
+    <!-- Getting started: week 1 only -->
+    <section class="sec shell" data-only="first">
+      <h2>Getting started<small>First week only</small></h2>
+      <div class="q" data-q="setup_ease">
+        <p class="qt">How easy was it to install the app from TestFlight and get into your account?</p>
+        <div class="scale" role="radiogroup" aria-label="Setup ease, 1 to 5">
+          <label><input type="radio" name="setup_ease" value="1"><span>1</span></label>
+          <label><input type="radio" name="setup_ease" value="2"><span>2</span></label>
+          <label><input type="radio" name="setup_ease" value="3"><span>3</span></label>
+          <label><input type="radio" name="setup_ease" value="4"><span>4</span></label>
+          <label><input type="radio" name="setup_ease" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>I nearly gave up</span><span>Effortless</span></div>
+      </div>
+      <div class="q">
+        <label class="qt" for="setup_stuck">Where did you get stuck or confused while setting up?</label>
+        <textarea class="field" id="setup_stuck" name="setup_stuck" maxlength="2000" placeholder="TestFlight, signing in, permissions, the first screen…"></textarea>
+      </div>
+      <div class="q">
+        <label class="qt" for="first_impression">In your first five minutes, what did you think Wombi was for?</label>
+        <p class="sub">Your words. This tells me whether the app explains itself.</p>
+        <input class="field" id="first_impression" name="first_impression" type="text" maxlength="400" placeholder="I thought it was…">
+      </div>
+    </section>
 
-    <div class="q">
-      <label class="qt" for="anything_else">Anything else?</label>
-      <textarea class="field" id="anything_else" name="anything_else" maxlength="3000" placeholder="Open floor"></textarea>
-    </div>
+    <!-- Using it -->
+    <section class="sec shell">
+      <h2>Using it</h2>
+      <div class="q" data-q="days_used">
+        <p class="qt">On how many days did you use the app this week? <span class="req">*</span></p>
+        <div class="scale tight" role="radiogroup" aria-label="Days used, 0 to 7">
+          <label><input type="radio" name="days_used" value="0"><span>0</span></label>
+          <label><input type="radio" name="days_used" value="1"><span>1</span></label>
+          <label><input type="radio" name="days_used" value="2"><span>2</span></label>
+          <label><input type="radio" name="days_used" value="3"><span>3</span></label>
+          <label><input type="radio" name="days_used" value="4"><span>4</span></label>
+          <label><input type="radio" name="days_used" value="5"><span>5</span></label>
+          <label><input type="radio" name="days_used" value="6"><span>6</span></label>
+          <label><input type="radio" name="days_used" value="7"><span>7</span></label>
+        </div>
+      </div>
+      <div class="q" data-q="capture_mode">
+        <p class="qt">How did you mostly put things in?</p>
+        <div class="opts">
+          <label><input type="radio" name="capture_mode" value="Mostly talking"><span>Mostly talking</span></label>
+          <label><input type="radio" name="capture_mode" value="Mostly typing"><span>Mostly typing</span></label>
+          <label><input type="radio" name="capture_mode" value="Both equally"><span>Both about equally</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <label class="qt" for="captured">What did you capture this week?</label>
+        <p class="sub">The kind of thing, not the content. "Two ideas for my newsletter on a run."</p>
+        <input class="field" id="captured" name="captured" type="text" maxlength="500" placeholder="Mostly…">
+      </div>
+      <div class="q" data-q="moments">
+        <p class="qt">When did you reach for it?</p>
+        <div class="opts">
+          <label><input type="checkbox" name="moments" value="Right after waking up"><span>Right after waking up</span></label>
+          <label><input type="checkbox" name="moments" value="Walking or running"><span>Walking, running or working out</span></label>
+          <label><input type="checkbox" name="moments" value="Driving or commuting"><span>Driving or commuting</span></label>
+          <label><input type="checkbox" name="moments" value="At my desk"><span>At my desk, while working</span></label>
+          <label><input type="checkbox" name="moments" value="After a meeting or conversation"><span>After a meeting or conversation</span></label>
+          <label><input type="checkbox" name="moments" value="Before bed"><span>Before bed</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <label class="qt" for="stopped_using">Was there a moment you meant to use Wombi but did not? What stopped you?</label>
+        <textarea class="field" id="stopped_using" name="stopped_using" maxlength="2000" placeholder="I had an idea while… but…"></textarea>
+      </div>
+    </section>
 
-    <div style="margin-top:34px">
+    <!-- Quality -->
+    <section class="sec shell">
+      <h2>How well it worked</h2>
+      <div class="q" data-q="transcription">
+        <p class="qt">When you talked, how accurate was the transcription?</p>
+        <div class="scale" role="radiogroup" aria-label="Transcription accuracy, 1 to 5">
+          <label><input type="radio" name="transcription" value="1"><span>1</span></label>
+          <label><input type="radio" name="transcription" value="2"><span>2</span></label>
+          <label><input type="radio" name="transcription" value="3"><span>3</span></label>
+          <label><input type="radio" name="transcription" value="4"><span>4</span></label>
+          <label><input type="radio" name="transcription" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>Mostly wrong</span><span>Word for word</span></div>
+      </div>
+
+      <div class="q">
+        <p class="qt">Wombi splits what you say into notes, tasks and people. How well did it file things?</p>
+        <p class="sub">Skip any row you did not try.</p>
+        <div class="grid g4" role="group" aria-label="Filing quality">
+          <span></span><span class="h">Spot on</span><span class="h">Mostly right</span><span class="h">Often wrong</span><span class="h">Didn't use</span>
+          <span class="r">Notes and folders</span>
+          <label><input type="radio" name="filing_notes" value="Spot on"><span></span></label>
+          <label><input type="radio" name="filing_notes" value="Mostly right"><span></span></label>
+          <label><input type="radio" name="filing_notes" value="Often wrong"><span></span></label>
+          <label><input type="radio" name="filing_notes" value="Did not use"><span></span></label>
+          <span class="r">Tasks and to-dos</span>
+          <label><input type="radio" name="filing_tasks" value="Spot on"><span></span></label>
+          <label><input type="radio" name="filing_tasks" value="Mostly right"><span></span></label>
+          <label><input type="radio" name="filing_tasks" value="Often wrong"><span></span></label>
+          <label><input type="radio" name="filing_tasks" value="Did not use"><span></span></label>
+          <span class="r">People</span>
+          <label><input type="radio" name="filing_people" value="Spot on"><span></span></label>
+          <label><input type="radio" name="filing_people" value="Mostly right"><span></span></label>
+          <label><input type="radio" name="filing_people" value="Often wrong"><span></span></label>
+          <label><input type="radio" name="filing_people" value="Did not use"><span></span></label>
+          <span class="r">Your day</span>
+          <label><input type="radio" name="filing_day" value="Spot on"><span></span></label>
+          <label><input type="radio" name="filing_day" value="Mostly right"><span></span></label>
+          <label><input type="radio" name="filing_day" value="Often wrong"><span></span></label>
+          <label><input type="radio" name="filing_day" value="Did not use"><span></span></label>
+          <span class="r">How you have been feeling</span>
+          <label><input type="radio" name="filing_feelings" value="Spot on"><span></span></label>
+          <label><input type="radio" name="filing_feelings" value="Mostly right"><span></span></label>
+          <label><input type="radio" name="filing_feelings" value="Often wrong"><span></span></label>
+          <label><input type="radio" name="filing_feelings" value="Did not use"><span></span></label>
+        </div>
+      </div>
+
+      <div class="q">
+        <label class="qt" for="misfiled">Describe one time it filed something wrong, or missed something.</label>
+        <p class="sub">What you said, roughly, and where it ended up. This is the most useful thing you can tell me.</p>
+        <textarea class="field" id="misfiled" name="misfiled" maxlength="3000" placeholder="I said… and it put it in…"></textarea>
+      </div>
+
+      <div class="q" data-q="had_bug">
+        <p class="qt">Did anything crash, freeze or lose what you said?</p>
+        <div class="opts">
+          <label><input type="radio" name="had_bug" value="No"><span>No</span></label>
+          <label><input type="radio" name="had_bug" value="Once"><span>Once</span></label>
+          <label><input type="radio" name="had_bug" value="More than once"><span>More than once</span></label>
+        </div>
+      </div>
+      <div class="q hidden" id="bugQ">
+        <label class="qt" for="bug_detail">What happened? What were you doing just before?</label>
+        <textarea class="field" id="bug_detail" name="bug_detail" maxlength="3000" placeholder="I pressed record, then…"></textarea>
+      </div>
+
+      <div class="q" data-q="speed">
+        <p class="qt">How did it feel to use?</p>
+        <div class="opts">
+          <label><input type="radio" name="speed" value="Fast"><span>Fast. Never waited</span></label>
+          <label><input type="radio" name="speed" value="Fine"><span>Fine</span></label>
+          <label><input type="radio" name="speed" value="Slow"><span>Slow. I noticed the waiting</span></label>
+        </div>
+      </div>
+    </section>
+
+    <!-- What matters -->
+    <section class="sec shell">
+      <h2>What matters to you</h2>
+      <div class="q" data-q="most_useful">
+        <p class="qt">Which part was most useful this week?</p>
+        <div class="opts">
+          <label><input type="radio" name="most_useful" value="Getting thoughts out fast"><span>Getting thoughts out of my head fast</span></label>
+          <label><input type="radio" name="most_useful" value="Automatic filing"><span>Not having to organize anything myself</span></label>
+          <label><input type="radio" name="most_useful" value="Tasks"><span>Tasks pulled out of what I said</span></label>
+          <label><input type="radio" name="most_useful" value="People"><span>Remembering things about people</span></label>
+          <label><input type="radio" name="most_useful" value="Your day"><span>Seeing my day in one place</span></label>
+          <label><input type="radio" name="most_useful" value="Feelings"><span>Seeing how I have been feeling</span></label>
+          <label><input type="radio" name="most_useful" value="Finding things later"><span>Finding something I said earlier</span></label>
+          <label><input type="radio" name="most_useful" value="Nothing yet"><span>Nothing yet</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <label class="qt" for="confusing">What was confusing, or felt pointless?</label>
+        <textarea class="field" id="confusing" name="confusing" maxlength="2000" placeholder="I did not understand why…"></textarea>
+      </div>
+      <div class="q">
+        <label class="qt" for="wish">If you could add or change one thing, what would it be?</label>
+        <textarea class="field" id="wish" name="wish" maxlength="2000" placeholder="I wish it could…"></textarea>
+      </div>
+      <div class="q" data-q="trust">
+        <p class="qt">How comfortable are you putting personal thoughts into Wombi?</p>
+        <div class="scale" role="radiogroup" aria-label="Trust, 1 to 5">
+          <label><input type="radio" name="trust" value="1"><span>1</span></label>
+          <label><input type="radio" name="trust" value="2"><span>2</span></label>
+          <label><input type="radio" name="trust" value="3"><span>3</span></label>
+          <label><input type="radio" name="trust" value="4"><span>4</span></label>
+          <label><input type="radio" name="trust" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>I hold back</span><span>I say everything</span></div>
+      </div>
+      <div class="q">
+        <label class="qt" for="trust_more">What would make you trust it more?</label>
+        <input class="field" id="trust_more" name="trust_more" type="text" maxlength="500" placeholder="Optional">
+      </div>
+    </section>
+
+    <!-- Website: week 1 only -->
+    <section class="sec shell" data-only="first">
+      <h2>The website<small>First week only</small></h2>
+      <p class="hint">Take one minute on <a href="/" target="_blank" rel="noopener" style="color:var(--gold-1)">wombi.store</a> before answering.</p>
+      <div class="q">
+        <label class="qt" for="site_in_own_words">From the website alone, what is Wombi? One sentence.</label>
+        <input class="field" id="site_in_own_words" name="site_in_own_words" type="text" maxlength="400" placeholder="Wombi is…">
+      </div>
+      <div class="q" data-q="site_clarity">
+        <p class="qt">How clear is the website about what Wombi does?</p>
+        <div class="scale" role="radiogroup" aria-label="Website clarity, 1 to 5">
+          <label><input type="radio" name="site_clarity" value="1"><span>1</span></label>
+          <label><input type="radio" name="site_clarity" value="2"><span>2</span></label>
+          <label><input type="radio" name="site_clarity" value="3"><span>3</span></label>
+          <label><input type="radio" name="site_clarity" value="4"><span>4</span></label>
+          <label><input type="radio" name="site_clarity" value="5"><span>5</span></label>
+        </div>
+        <div class="ends"><span>No idea</span><span>Crystal clear</span></div>
+      </div>
+      <div class="q">
+        <label class="qt" for="site_improve">What would you change on the website? Missing, confusing, or would make you trust it more.</label>
+        <textarea class="field" id="site_improve" name="site_improve" maxlength="2000" placeholder="It never says… / I would add…"></textarea>
+      </div>
+    </section>
+
+    <!-- The wearable -->
+    <section class="sec shell" data-only="first">
+      <h2>The wearable<small>First week only</small></h2>
+      <p class="hint">Wombi will also be a small wearable: press it, speak, let go. No phone needed.</p>
+      <div class="q" data-q="wearable_interest">
+        <p class="qt">Would you rather press a button on your wrist than open the app?</p>
+        <div class="opts">
+          <label><input type="radio" name="wearable_interest" value="Yes, that is the dream"><span>Yes, that is the dream</span></label>
+          <label><input type="radio" name="wearable_interest" value="Sometimes"><span>Sometimes, for certain moments</span></label>
+          <label><input type="radio" name="wearable_interest" value="No, the phone is enough"><span>No, the phone is enough</span></label>
+        </div>
+      </div>
+      <div class="q">
+        <label class="qt" for="wearable_when">When this week would a wearable have been better than your phone?</label>
+        <input class="field" id="wearable_when" name="wearable_when" type="text" maxlength="400" placeholder="On my run when…">
+      </div>
+    </section>
+
+    <!-- Overall -->
+    <section class="sec shell">
+      <h2>Overall</h2>
+      <div class="q" data-q="disappointed">
+        <p class="qt">How would you feel if you could no longer use Wombi? <span class="req">*</span></p>
+        <div class="opts">
+          <label><input type="radio" name="disappointed" value="Very disappointed"><span>Very disappointed</span></label>
+          <label><input type="radio" name="disappointed" value="Somewhat disappointed"><span>Somewhat disappointed</span></label>
+          <label><input type="radio" name="disappointed" value="Not disappointed"><span>Not disappointed, it is not there yet</span></label>
+        </div>
+      </div>
+      <div class="q" data-q="recommend">
+        <p class="qt">How likely are you to recommend Wombi to a friend?</p>
+        <div class="scale xtight" role="radiogroup" aria-label="Recommend, 0 to 10">
+          <label><input type="radio" name="recommend" value="0"><span>0</span></label>
+          <label><input type="radio" name="recommend" value="1"><span>1</span></label>
+          <label><input type="radio" name="recommend" value="2"><span>2</span></label>
+          <label><input type="radio" name="recommend" value="3"><span>3</span></label>
+          <label><input type="radio" name="recommend" value="4"><span>4</span></label>
+          <label><input type="radio" name="recommend" value="5"><span>5</span></label>
+          <label><input type="radio" name="recommend" value="6"><span>6</span></label>
+          <label><input type="radio" name="recommend" value="7"><span>7</span></label>
+          <label><input type="radio" name="recommend" value="8"><span>8</span></label>
+          <label><input type="radio" name="recommend" value="9"><span>9</span></label>
+          <label><input type="radio" name="recommend" value="10"><span>10</span></label>
+        </div>
+        <div class="ends"><span>Not at all</span><span>Already have</span></div>
+      </div>
+      <div class="q">
+        <label class="qt" for="who_for">Who do you know that needs this?</label>
+        <input class="field" id="who_for" name="who_for" type="text" maxlength="400" placeholder="My friend who…">
+      </div>
+      <div class="q">
+        <label class="qt" for="would_pay_for">What would you actually pay for?</label>
+        <p class="sub">A feature, a result, a feeling. Or "nothing yet".</p>
+        <input class="field" id="would_pay_for" name="would_pay_for" type="text" maxlength="500" placeholder="I would pay for…">
+      </div>
+      <div class="q">
+        <label class="qt" for="anything_else">Anything else?</label>
+        <textarea class="field" id="anything_else" name="anything_else" maxlength="3000" placeholder="Open floor"></textarea>
+      </div>
+    </section>
+
+    <section class="submit shell">
       <button class="btn" type="submit" id="send">Send check-in</button>
+      <p class="micro">Your answers go straight to me and nobody else. Required questions are marked with a gold star.</p>
       <p class="form-msg" id="msg" aria-live="polite"></p>
-    </div>
+    </section>
   </form>
 
   <section class="done shell hidden" id="thanks">
@@ -260,32 +518,60 @@
 
 <script>
 (() => {
-  /* wombi.store/pulse?w=3 → saved to feedback_responses with survey "beta-w3" */
+  /* wombi.store/pulse?w=3 → saved to feedback_responses with survey "beta-w3".
+     Sections marked data-only="first" show in week 1 (or with ?full=1). */
   const params = new URLSearchParams(location.search);
   const week = (params.get('w') || '').replace(/[^0-9]/g, '').slice(0, 2);
   const survey = week ? 'beta-w' + week : 'beta-pulse';
-  if (week) { document.getElementById('eyebrow').textContent = 'Weekly check-in · week ' + week; document.getElementById('weekTag').textContent = 'Week ' + week; }
+  const first = week === '1' || week === '' || params.get('full') === '1';
+  if (week) {
+    document.getElementById('eyebrow').textContent = 'Weekly check-in · week ' + week;
+    document.getElementById('weekTag').textContent = 'Week ' + week;
+  }
+  if (!first) {
+    document.querySelectorAll('[data-only="first"]').forEach(el => el.remove());
+    document.getElementById('meta').innerHTML = 'Takes about <b>3 minutes</b>. Only the starred questions are required.';
+  } else {
+    document.getElementById('title').innerHTML = 'Your first week<br>with Wombi.';
+    document.getElementById('meta').innerHTML = 'Takes about <b>6 minutes</b> this first time, shorter after. Only the starred questions are required.';
+  }
 
   const SUPABASE_URL = 'https://lxsvgadyswifsnhcbayq.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_5gG_hfA0AkxSuhH0QEWzPQ_r3KgZVEG';
   const PREVIEW = /claude\.ai$|claudeusercontent|localhost|^file:/.test(location.hostname + location.protocol);
   const form = document.getElementById('fb'), msg = document.getElementById('msg'), btn = document.getElementById('send'), bar = document.getElementById('bar');
   const REQUIRED = ['email', 'days_used', 'disappointed'];
+  const DRAFT_KEY = 'wombi-pulse-' + survey;
   const emailEl = document.getElementById('email');
-  try { emailEl.value = params.get('e') || localStorage.getItem('wombi-tester-email') || ''; } catch (e) {}
 
   function collect() {
     const out = {};
     Array.from(form.elements).filter(el => el.name).forEach(el => {
       if ((el.type === 'radio' || el.type === 'checkbox') && !el.checked) return;
-      const v = (el.value || '').trim(); if (v) out[el.name] = v;
+      const v = (el.value || '').trim(); if (!v) return;
+      if (el.type === 'checkbox') { (out[el.name] = out[el.name] || []).push(v); }
+      else out[el.name] = v;
     });
     return out;
   }
   function progress() {
     const names = Array.from(new Set(Array.from(form.elements).filter(el => el.name).map(el => el.name)));
     const a = collect(); bar.style.width = Math.round(100 * names.filter(n => a[n]).length / names.length) + '%';
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(a)); } catch (e) {}
   }
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT_KEY) || '{}');
+    Object.entries(d).forEach(([k, v]) => form.querySelectorAll(`[name="${CSS.escape(k)}"]`).forEach(el => {
+      if (el.type === 'radio') el.checked = el.value === v;
+      else if (el.type === 'checkbox') el.checked = Array.isArray(v) && v.includes(el.value);
+      else el.value = v;
+    }));
+  } catch (e) {}
+  try { if (!emailEl.value) emailEl.value = params.get('e') || localStorage.getItem('wombi-tester-email') || ''; } catch (e) {}
+
+  const bugQ = document.getElementById('bugQ');
+  function syncBug() { const v = form.querySelector('input[name="had_bug"]:checked'); bugQ.classList.toggle('hidden', !(v && v.value !== 'No')); }
+  form.addEventListener('change', syncBug); syncBug();
   form.addEventListener('input', progress); form.addEventListener('change', progress); progress();
 
   form.addEventListener('submit', async (e) => {
@@ -303,7 +589,12 @@
     const email = a.email.toLowerCase();
     try { localStorage.setItem('wombi-tester-email', email); } catch (e) {}
 
-    const row = { survey, respondent_role: 'Beta tester', email, answers: Object.assign({ week: week ? +week : null }, a), user_agent: navigator.userAgent.slice(0, 300) };
+    const row = {
+      survey, respondent_role: 'Beta tester', email,
+      respondent_name: a.respondent_name || null,
+      answers: Object.assign({ week: week ? +week : null }, a),
+      user_agent: navigator.userAgent.slice(0, 300),
+    };
     btn.disabled = true; const label = btn.textContent; btn.textContent = 'Sending';
     try {
       if (PREVIEW) { await new Promise(r => setTimeout(r, 600)); return done('Preview: nothing was saved. The form goes live on wombi.store.'); }
@@ -319,6 +610,7 @@
   });
   function fail(t) { msg.textContent = t; msg.classList.add('err'); }
   function done(text) {
+    try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
     form.classList.add('hidden'); document.querySelector('.intro').classList.add('hidden');
     if (text) document.getElementById('thanksText').textContent = text;
     document.getElementById('thanks').classList.remove('hidden');
