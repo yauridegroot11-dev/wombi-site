@@ -165,6 +165,20 @@
   .scale.xtight { flex-wrap: nowrap; gap: 4px; }
   .scale.xtight label { min-width: 0; }
   .scale.xtight span { font-size: 14px; padding: 11px 0; }
+  .meta.tip { margin-top: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips label { position: relative; }
+  .chips input { position: absolute; opacity: 0; inset: 0; }
+  .chips span { display: inline-block; padding: 10px 14px; border-radius: 999px; font-size: 15px; line-height: 1.25; background: rgba(245,240,227,0.05); border: 1px solid rgba(245,240,227,0.16); cursor: pointer; transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease; }
+  .chips label:hover span { border-color: rgba(250,206,92,0.5); }
+  .chips input:checked + span { background: linear-gradient(180deg, var(--gold-1), var(--gold-2)); color: var(--ink); border-color: transparent; }
+  .chips input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 3px; }
+  .fblock { margin-top: 18px; padding: 18px 18px 20px; border-radius: 10px; background: rgba(245,240,227,0.04); border: 1px solid rgba(224,162,48,0.28); }
+  .fblock h3 { font-size: 17px; font-weight: 500; letter-spacing: -0.01em; color: var(--gold-1); }
+  .fblock .scale { margin-top: 12px; }
+  .fblock .scale span { font-family: var(--body); font-size: 14.5px; padding: 11px 4px; }
+  .fblock .field { margin-top: 10px; }
+  textarea.field.fb-better { min-height: 70px; }
   .grid > span { background: none; border: 0; height: auto; cursor: default; }
   .grid.g4 { grid-template-columns: 1fr repeat(4, minmax(52px, 84px)); }
   .sec h2 small { display: block; margin-top: 6px; font-family: var(--body); font-size: 13px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold-2); }
@@ -194,6 +208,7 @@
     <p class="eyebrow" id="eyebrow">Founding tester feedback</p>
     <h1 id="title">What do you think<br>of Wombi so far?</h1>
     <p class="lede">Every answer goes straight to me and shapes what I build next. Short answers are perfect. Blunt ones are better.</p>
+    <p class="meta tip">Tip: tap the microphone on your keyboard and talk your answers instead of typing.</p>
     <p class="meta" id="meta">Takes about <b>5 minutes</b>. Only the starred questions are required.</p>
   </section>
 
@@ -330,29 +345,39 @@
       </div>
     </section>
 
-    <!-- What matters -->
+    <!-- The parts of Wombi -->
     <section class="sec shell">
-      <h2>What matters to you</h2>
-      <div class="q" data-q="most_useful">
-        <p class="qt">Which part has been most useful so far?</p>
-        <div class="opts">
-          <label><input type="radio" name="most_useful" value="Getting thoughts out fast"><span>Getting thoughts out of my head fast</span></label>
-          <label><input type="radio" name="most_useful" value="Automatic filing"><span>Not having to organize anything myself</span></label>
-          <label><input type="radio" name="most_useful" value="Tasks"><span>Tasks pulled out of what I said</span></label>
-          <label><input type="radio" name="most_useful" value="People"><span>Remembering things about people</span></label>
-          <label><input type="radio" name="most_useful" value="Your day"><span>Seeing my day in one place</span></label>
-          <label><input type="radio" name="most_useful" value="Feelings"><span>Seeing how I have been feeling</span></label>
-          <label><input type="radio" name="most_useful" value="Finding things later"><span>Finding something I said earlier</span></label>
-          <label><input type="radio" name="most_useful" value="Nothing yet"><span>Nothing yet</span></label>
-        </div>
+      <h2>The parts of Wombi</h2>
+      <p class="hint">Tap the parts you have tried. Each one opens two quick questions: how it is going, and what would make it better.</p>
+      <div class="q" data-q="tried" style="margin-top:20px">
+        <div class="chips" id="chips"></div>
+      </div>
+      <div id="featureBlocks"></div>
+    </section>
+
+    <!-- Make it better -->
+    <section class="sec shell">
+      <h2>Make it better</h2>
+      <p class="hint">Specific or big picture, both help. Half a sentence is plenty.</p>
+      <div class="q">
+        <label class="qt" for="fix_first">If I could fix one thing tomorrow, what should it be?</label>
+        <input class="field" id="fix_first" name="fix_first" type="text" maxlength="500" placeholder="Fix…">
+      </div>
+      <div class="q">
+        <label class="qt" for="wish">What should Wombi do that it cannot do yet?</label>
+        <textarea class="field" id="wish" name="wish" maxlength="2000" placeholder="I wish it could…"></textarea>
+      </div>
+      <div class="q">
+        <label class="qt" for="daily_use">What would make you open Wombi every day?</label>
+        <input class="field" id="daily_use" name="daily_use" type="text" maxlength="500" placeholder="If it…">
       </div>
       <div class="q">
         <label class="qt" for="confusing">What was confusing, or felt pointless?</label>
-        <textarea class="field" id="confusing" name="confusing" maxlength="2000" placeholder="I did not understand why…"></textarea>
+        <input class="field" id="confusing" name="confusing" type="text" maxlength="1000" placeholder="I did not understand why…">
       </div>
       <div class="q">
-        <label class="qt" for="wish">If you could add or change one thing, what would it be?</label>
-        <textarea class="field" id="wish" name="wish" maxlength="2000" placeholder="I wish it could…"></textarea>
+        <label class="qt" for="replaces">What do you use today that Wombi should replace, or work with?</label>
+        <input class="field" id="replaces" name="replaces" type="text" maxlength="500" placeholder="Apple Notes, Notion, voice memos, Todoist…">
       </div>
       <div class="q" data-q="trust">
         <p class="qt">How comfortable are you putting personal thoughts into Wombi?</p>
@@ -499,6 +524,40 @@
     document.getElementById('meta').innerHTML = 'Takes about <b>5 minutes</b>. Only the starred questions are required.';
   }
 
+  /* The parts of Wombi. key → answers.f_<key> (Love it / It's OK / Needs work) and answers.f_<key>_better */
+  const FEATURES = [
+    ['capture',    'Recording a braindump',        'Talking or typing into Wombi',                      'e.g. a faster way to start recording'],
+    ['filing',     'Notes and folders',            'Where it files what you said',                      'e.g. it put my gym idea under Work'],
+    ['tasks',      'Tasks',                        'To-dos it pulls out of what you said',              'e.g. it made a task out of a passing thought'],
+    ['day',        'Your day',                     'The overview of your day',                          'e.g. show me tomorrow too'],
+    ['people',     'People',                       'What it remembers about the people in your life',   'e.g. it merged two people with the same name'],
+    ['feelings',   'Feelings',                     'How you have been feeling over time',               'e.g. let me correct the mood it picked'],
+    ['insights',   'Insights and nudges',          'Connections and reminders it surfaces',             'e.g. fewer, but more useful ones'],
+    ['search',     'Finding things later',         'Searching or asking about past notes',              'e.g. it could not find what I said last week'],
+    ['practices',  'Guided practices',             'Decide, untangle, write a letter',                  'e.g. the steps felt too long'],
+    ['challenges', 'Challenges with friends',      'Shared challenges and check-ins',                   'e.g. remind me when a friend checks in'],
+    ['ai',         'Wombi in Claude or other AI',  'Using your Wombi notes from another AI app',         'e.g. setup was confusing'],
+  ];
+  const chips = document.getElementById('chips'), blocks = document.getElementById('featureBlocks');
+  FEATURES.forEach(([k, name, desc, eg]) => {
+    chips.insertAdjacentHTML('beforeend', `<label><input type="checkbox" name="tried" value="${k}"><span>${name}</span></label>`);
+    blocks.insertAdjacentHTML('beforeend', `
+      <div class="fblock hidden" data-feature="${k}">
+        <h3>${name}</h3>
+        <p class="sub">${desc}</p>
+        <div class="scale" role="radiogroup" aria-label="${name}">
+          <label><input type="radio" name="f_${k}" value="Love it"><span>Love it</span></label>
+          <label><input type="radio" name="f_${k}" value="It's OK"><span>It's OK</span></label>
+          <label><input type="radio" name="f_${k}" value="Needs work"><span>Needs work</span></label>
+        </div>
+        <textarea class="field fb-better" name="f_${k}_better" rows="2" maxlength="1000" placeholder="What would make it better? ${eg}" aria-label="What would make ${name} better?"></textarea>
+      </div>`);
+  });
+  function syncFeatures() {
+    const on = new Set(Array.from(form.querySelectorAll('input[name="tried"]:checked')).map(i => i.value));
+    blocks.querySelectorAll('.fblock').forEach(b => b.classList.toggle('hidden', !on.has(b.dataset.feature)));
+  }
+
   const SUPABASE_URL = 'https://lxsvgadyswifsnhcbayq.supabase.co';
   const SUPABASE_KEY = 'sb_publishable_5gG_hfA0AkxSuhH0QEWzPQ_r3KgZVEG';
   const PREVIEW = /claude\.ai$|claudeusercontent|localhost|^file:/.test(location.hostname + location.protocol);
@@ -510,6 +569,7 @@
   function collect() {
     const out = {};
     Array.from(form.elements).filter(el => el.name).forEach(el => {
+      if (el.closest('.hidden')) return;
       if ((el.type === 'radio' || el.type === 'checkbox') && !el.checked) return;
       const v = (el.value || '').trim(); if (!v) return;
       if (el.type === 'checkbox') { (out[el.name] = out[el.name] || []).push(v); }
@@ -518,7 +578,7 @@
     return out;
   }
   function progress() {
-    const names = Array.from(new Set(Array.from(form.elements).filter(el => el.name).map(el => el.name)));
+    const names = Array.from(new Set(Array.from(form.elements).filter(el => el.name && !el.closest('.hidden')).map(el => el.name)));
     const a = collect(); bar.style.width = Math.round(100 * names.filter(n => a[n]).length / names.length) + '%';
     try { localStorage.setItem(DRAFT_KEY, JSON.stringify(a)); } catch (e) {}
   }
@@ -535,6 +595,7 @@
   const bugQ = document.getElementById('bugQ');
   function syncBug() { const v = form.querySelector('input[name="had_bug"]:checked'); bugQ.classList.toggle('hidden', !(v && v.value !== 'No')); }
   form.addEventListener('change', syncBug); syncBug();
+  form.addEventListener('change', syncFeatures); syncFeatures();
   form.addEventListener('input', progress); form.addEventListener('change', progress); progress();
 
   form.addEventListener('submit', async (e) => {
